@@ -89,7 +89,7 @@ job dequeue(queue *a) {
 
 int size(queue *a) {
 	int quantity=0;
-	for (int i=0; i<a->tail; i++) {
+	for (int i=a->head; i<a->tail; i++) {
 		quantity++;
 	}
 	return quantity;
@@ -98,6 +98,8 @@ int size(queue *a) {
 int main() {
 	queue run;
 	job job1;
+	run.jobqueue = (job*)malloc(SIZE*sizeof(job));
+	printf("%d\n",sizeof(job));
 	job1.job_id = 42;
 	job job2;
 	job2.job_id = 23;
@@ -107,8 +109,7 @@ int main() {
 	job4.job_id = 1;
 	job job5;
 	job5.job_id = 3;
-	run.jobqueue = (job*)malloc(SIZE*sizeof(job));
-	printf("%d\n",sizeof(job));
+	
 	run.head = 0;
 	run.tail = 0;
 	queue *p;
