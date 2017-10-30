@@ -8,7 +8,7 @@
 typedef struct Job {
 	int job_id; // 4
 
-    int NR_PHASES;  // 4
+    	int NR_PHASES;  // 4
 
 	int current_phase; // 4
 
@@ -24,6 +24,8 @@ typedef struct Queue {
 	//int* runqueue;
 	job* jobqueue; 
 	int head,tail;
+	//*************job* head = jobqueue, tail = head;
+	// move tail when ever you add someting
 }queue;
 /*
 int enqueue(queue run,int x) {
@@ -53,12 +55,12 @@ int dequeue(queue run) {
 
 void enqueue(queue *a,job b) {
 	for (int i=0; i<SIZE; i++) {
-		if (a->tail==4 && a->head!=a->tail) {
+		if (a->tail==4 && a->head!=a->tail) {// a-> is the same as (*a).tail = 
 			printf("Queue is full!\n");
 			return;
 		}
-		if (a->head==a->tail) {
-			a->head =0;
+		if (a->head==a->tail) {// head value == tail value only true if address was already the same value
+			a->head =0; 
 			a->tail =0;
 			a->jobqueue[i]=b;
 			a->tail++;
