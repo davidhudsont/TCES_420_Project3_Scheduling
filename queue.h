@@ -1,4 +1,5 @@
 
+#include <job.h>
 // Include file
 
 typedef struct Queue {

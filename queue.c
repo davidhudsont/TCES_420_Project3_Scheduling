@@ -6,7 +6,7 @@
 
 void enqueue(queue *q,job j) {
 	for (int i=0; i<q->qsize; i++) {
-		if (q->tail==qsize && q->head!=q->tail) {
+		if (q->tail==q->qsize && q->head!=q->tail) {
 			printf("Queue is full!\n");
 			return;
 		}
@@ -26,7 +26,7 @@ void enqueue(queue *q,job j) {
 }
 
 job* dequeue(queue *q) {
-	for (int i=0; i<q->size; i++) {
+	for (int i=0; i<q->qsize; i++) {
 		if (q->head == q->tail && q->tail!=0) {
 			q->head = 0;
 		}
