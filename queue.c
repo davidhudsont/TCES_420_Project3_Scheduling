@@ -3,12 +3,6 @@
 #include <stdio.h>
 #include <queue.h>
 
-typedef struct Queue {
-	int qsize;	
-	int head,tail;
-	job* jobqueue; 
-}queue;
-
 
 void enqueue(queue *q,job j) {
 	for (int i=0; i<q->qsize; i++) {
