@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-
+#include <queue.h>
 #define qSIZE 4
 #define jSIZE 4
 
@@ -12,55 +12,6 @@ typedef struct Job {
 	int is_completed; 
 	
 }job; 
-
-typedef struct Queue {
-	
-	job* jobqueue; 
-	int head,tail;
-}queue;
-
-
-void enqueue(queue *a,job b) {
-	for (int i=0; i<qSIZE; i++) {
-		if (a->tail==4 && a->head!=a->tail) {
-			printf("Queue is full!\n");
-			return;
-		}
-		if (a->head==a->tail) {
-			a->head =0;
-			a->tail =0;
-			a->jobqueue[i]=b;
-			a->tail++;
-			return;
-		}
-		if (i==a->tail) {
-			a->jobqueue[i]=b;
-			a->tail= a->tail+1;
-			return;
-		}
-	}
-}
-
-job* dequeue(queue *a) {
-	for (int i=0; i<qSIZE; i++) {
-		if (a->head == a->tail && a->tail!=0) {
-			a->head = 0;
-		}
-		if (i==a->head) {
-			job *ret = &a->jobqueue[i];
-			a->head++;
-			return ret;
-		}
-	}
-}
-
-int queue_size(queue *a) {
-	int quantity=0;
-	for (int i=a->head; i<a->tail; i++) {
-		quantity++;
-	}
-	return quantity;
-}
 
 void init_job(job* j,int id,int time,int crt_phase, int is_comp) {
 	j->job_id = id;
