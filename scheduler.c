@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <queue.h>
+
 #define qSIZE 4
 #define jSIZE 4
 
@@ -33,27 +34,7 @@ void delay(int time){
 }
 
 int main() {
-	run.jobqueue = (job*)calloc(qSIZE,sizeof(job));
-	io.jobqueue = (job*)calloc(qSIZE,sizeof(job));
-	//done.jobqueue = (job*)malloc(qSIZE*sizeof(job));
-	srand(time(NULL));
-		
-	for (int i=0; i<jSIZE; i++) {
-		job* j = (job*)malloc(sizeof(job));
-		int dur = rand()%5;
-		init_job(j,i+1,dur,0,0);
-		enqueue(run_ptr,*j);
-	}
-	for (int i=0; i<queue_size(run_ptr); i++) {
-		printf("job_id: %d job_dur: %d\n", run.jobqueue[i].job_id,run.jobqueue[i].duration);
-	}
-	for (int i=0; i<jSIZE; i++) {
-		job* j = dequeue(run_ptr);
-		delay(j->duration);
-		printf("Job Finished\n");
-		enqueue(io_ptr,*j);
-		printf("job_id: %d job_dur: %d\n", io.jobqueue[i].job_id,io.jobqueue[i].duration);
-	}
+	queue_init(run_ptr,qSIZE);
 	
 	return 0;
 }
