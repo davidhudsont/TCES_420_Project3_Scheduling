@@ -6,7 +6,7 @@
 #define LIST_H_
 
 typedef struct Queue {
- 	int qsize;	
+ 	int qsize,qcapacity;	
  	int head,tail;
  	job* jobqueue; 
  }queue;
