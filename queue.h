@@ -6,7 +6,7 @@
 #define LIST_H_
 
 typedef struct node_tag {
-   job* j;
+   job* data;
    struct node_tag *next;
 } Node;
 
