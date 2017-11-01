@@ -4,52 +4,36 @@
 #include <queue.h>
 
 
+int isEmpty(queue *q){
+	return (q->qsize ==0);	
+}	    
+
+int isFull(queue *q){
+	return (q->qsize ==q->qcapacity);	
+}
+
+void queue_init(queue *q,int capacity) {
+	q->jobqueue = (job*)calloc(capacity,sizeof(job));
+	q->qcapacity = capacity;
+	q->head = 0;
+	q->tail = capacity-1;
+	q->qsize = 0;
+}
+
 void enqueue(queue *q,job j) {
-	for (int i=0; i<q->qsize; i++) {
-		if (q->tail==qsize && q->head!=q->tail) {
-			printf("Queue is full!\n");
-			return;
-		}
-		if (q->head==q->tail) {
-			q->head =0;
-			q->tail =0;
-			q->jobqueue[i]=j;
-			q->tail++;
-			return;
-		}
-		if (i==q->tail) {
-			q->jobqueue[i]=j;
-			q->tail++;
-			return;
-		}
-	}
+	if (isFull(q)) { return; } 
+	q->tail = (q->tail + 1)%q->qcapacity;
+	q->jobqueue[q->tail] = j;
+	q->qsize++;
 }
 
 job* dequeue(queue *q) {
-	for (int i=0; i<q->size; i++) {
-		if (q->head == q->tail && q->tail!=0) {
-			q->head = 0;
-		}
-		if (i==q->head) {
-			job *ret = &q->jobqueue[i];
-			q->head++;
-			return ret;
-		}
-	}
+	if (isEmpty(q)) { return NULL;}
+	job *ret = &q->jobqueue[q->head];
+	q->head = (q->head+1)%q->qcapacity;
+	q->qsize--;
+	return ret;
 }
+	    
 
-int queue_size(queue *q) {
-	int quantity=0;
-	for (int i=q->head; i<q->tail; i++) {
-		quantity++;
-	}
-	return quantity;
-}
 
-void queue_init(queue *q,int size) {
-	q->qsize = size;
-	q->head = 0;
-	q->tail = 0;
-	q->jobqueue = (job*)calloc(size,sizeof(job));
-	
-}
