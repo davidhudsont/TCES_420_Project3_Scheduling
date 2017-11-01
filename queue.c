@@ -8,7 +8,7 @@ void enqueue(queue *q,job j) {
 	struct Node *newNode;
     newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = j;
-    newNode -> next = NULL;
+    newNode->next = NULL;
     if(queue->head == NULL);
         queue->head = newNode;
         queue->tail = newNode;
@@ -42,11 +42,11 @@ job* dequeue(queue *q) {
         printf("\nQueue is Empty!!!\n");
         return NULL;
     }
-    struct Node *temp = queue->front;
-    printf("\n element: %d\n",  queue->front->data);
-    queue->front = queue->front->next;
-    if( queue->front == NULL){
-        q->rear = NULL;
+    struct Node *temp = queue->head;
+    printf("\n element: %d\n",  queue->head->data);
+    queue->head = queue->head->next;
+    if( queue->head == NULL){
+        q->tail = NULL;
     }
     return temp->data;
     
