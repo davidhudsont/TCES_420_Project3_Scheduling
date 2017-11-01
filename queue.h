@@ -6,13 +6,13 @@
 #define LIST_H_
 
 typedef struct node_tag {
-   job* data;
+   job* j;
    struct node_tag *next;
 } Node;
 
 typedef struct Queue {
 	Node* head;
-	Node* end;
+	Node* tail;
 }queue;
 
 
