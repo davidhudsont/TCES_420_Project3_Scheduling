@@ -10,7 +10,11 @@ typedef struct Queue {
  	int head,tail;
  	job* jobqueue; 
  }queue;
-  
+ 
+int isEmpty(queue *q);
+
+int isFull(queue *q);
+ 
  void enqueue(queue *q,job j);
  
  job* dequeue(queue *q);
