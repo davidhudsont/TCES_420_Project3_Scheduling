@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <queue.h>
 
-
 void enqueue(queue *q,job j) {
 	for (int i=0; i<q->qsize; i++) {
 		if (q->tail==q->qsize && q->head!=q->tail) {
@@ -36,14 +35,6 @@ job* dequeue(queue *q) {
 			return ret;
 		}
 	}
-}
-
-int queue_size(queue *q) {
-	int quantity=0;
-	for (int i=q->head; i<q->tail; i++) {
-		quantity++;
-	}
-	return quantity;
 }
 
 void queue_init(queue *q,int size) {
