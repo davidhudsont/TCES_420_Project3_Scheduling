@@ -6,5 +6,5 @@
 * I/O Threads : David V
 
 ## Multiple Branches
-I have created multiple branches with our names the master branch will get updated when we
-implement successfully a new function or method.
+I have created multiple branches with our names. 
+The master branch will get updated when we implement successfully a new function or method.
