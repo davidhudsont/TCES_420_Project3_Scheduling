@@ -6,6 +6,7 @@
 #define qSIZE 4
 #define jSIZE 4
 
+int job_counter;
 queue run;
 queue io;
 queue done;
@@ -19,23 +20,6 @@ void delay(int time){
 }
 
 int main() {
-	queue_init(run_ptr,qSIZE);
-	job j[jSIZE];
-	job *p = j;
-	srand(time(NULL));
-	for (int i=0; i<jSIZE; i++) {
-		init_job(p,i,rand()%5+1,rand()%10+1, 0);
-		p++;
-	}
-	p = j;
-	for (int i=0; i<qSIZE; i++) {
-		enqueue(run_ptr,*p);
-		p++;
-	}
-	p = j;
-	while (!isEmpty(run_ptr)) {
-		job x = *dequeue(run_ptr);
-		printf("id: %d\n", x.job_id);
-	}
+	
 	return 0;
 }
