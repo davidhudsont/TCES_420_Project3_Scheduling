@@ -8,6 +8,7 @@
 
 void init_job(job* j,int id) {
 	srand(time(NULL));
+	j->is_completed = 0;
 	j->job_id = id;
 	j->tasks = rand()%4+2;
 	j->phases = (int **)malloc(j->tasks*sizeof(int*));
