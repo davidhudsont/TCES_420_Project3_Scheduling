@@ -11,7 +11,7 @@ The master branch will get updated when we implement successfully a new function
 
 You will need to instantiate multiple instances of jobs with different phase types and durations including different combinations of CPU and IO phases (IOW, you don’t have to use the above phase definitions; you may choose your own mechanisms and/or definitions). Each phase must have a time associated with it, such that the local CPU and I/O schedulers know how long each phase runs.
 
-# #Operational Details
+## Operational Details
 
 You will implement three queues to handle scheduling job to either run on CPUs or perform I/O:
 
