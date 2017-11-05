@@ -13,7 +13,7 @@ int isFull(queue *q){
 }
 
 void queue_init(queue *q,int capacity) {
-	q->jobqueue = (job*)calloc(capacity,sizeof(job));
+	q->jobqueue = (job*)malloc(capacity*sizeof(job));
 	q->qcapacity = capacity;
 	q->head = 0;
 	q->tail = capacity-1;
