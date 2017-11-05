@@ -27,12 +27,12 @@ void enqueue(queue *q,job j) {
 	q->qsize++;
 }
 
-job* dequeue(queue *q) {
+job dequeue(queue *q) {
 	if (isEmpty(q)) { return NULL;}
 	job *ret = &q->jobqueue[q->head];
 	q->head = (q->head+1)%q->qcapacity;
 	q->qsize--;
-	return ret;
+	return *ret;
 }
 	    
 
