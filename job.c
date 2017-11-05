@@ -14,7 +14,7 @@ void init_job(job* j,int id) {
 	j->tasks = rand()%4+2;
 	j->phases = (int **)malloc(j->tasks*sizeof(int*));
 	for (int i=0; i<2; i++) {
-		j->phases[i] = (int*)malloc(2*sizeof(int));
+		j->phases[i] = (int*)malloc(sizeof(int));
 	}
 	for (int col=0; col<j->tasks; col++) {
 			int phase_type = rand()%2;
