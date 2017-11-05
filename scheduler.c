@@ -2,9 +2,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <queue.h>
+#include <assert.h>
+#include <pthread.h>
+#include <unistd.h>
 
-//#include <pthread.h>
-//#include <unistd.h>
 #define qSIZE 100
 #define jSIZE 40
 
