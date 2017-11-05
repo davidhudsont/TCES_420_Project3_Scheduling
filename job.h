@@ -9,4 +9,4 @@ typedef struct Job {
 	int current_phase; 
 }job; 
 
-void init_job(job* j,int id,int cpu,int io, int phase);
+void init_job(job* j,int id);
