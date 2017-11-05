@@ -22,28 +22,18 @@ sem_t add_run;
 sem_t add_run_lock;
 sem_t sub_run;
 sem_t sub_run_lock;
-sem_init(&add_run,0,qSIZE);
-sem_init(&add_run_lock,0,1);
-sem_init(&sub_run,0,qSIZE);
-sem_init(&add_run_lock,0,1);
 
 sem_t add_io;
 sem_t add_io_lock;
 sem_t sub_io;
 sem_t sub_io_lock;
-sem_init(&add_io,0,qSIZE);
-sem_init(&add_io_lock,0,1);
-sem_init(&sub_io,0,qSIZE);
-sem_init(&sub_io_lock,0,1);
+
 
 sem_t add_finished;
 sem_t add_finished_lock;
 sem_t sub_finished;
 sem_t sub_finished_lock;
-sem_init(&add_finished,0,qSIZE);
-sem_init(&add_finished_lock,0,1);
-sem_init(&sub_finished,0,qSIZE);
-sem_init(&sub_finished_lock,0,1);
+
 
 /*
 		sem_wait(&sub_run);
@@ -97,6 +87,19 @@ void * cpu_thread(void * arg) {
 }
 
 int main() {
+	sem_init(&add_run,0,qSIZE);
+	sem_init(&add_run_lock,0,1);
+	sem_init(&sub_run,0,qSIZE);
+	sem_init(&add_run_lock,0,1);
+	sem_init(&add_io,0,qSIZE);
+	sem_init(&add_io_lock,0,1);
+	sem_init(&sub_io,0,qSIZE);
+	sem_init(&sub_io_lock,0,1);
+	sem_init(&add_finished,0,qSIZE);
+	sem_init(&add_finished_lock,0,1);
+	sem_init(&sub_finished,0,qSIZE);
+	sem_init(&sub_finished_lock,0,1);
+	
 	queue_init(run_ptr,qSIZE);
 	queue_init(io_ptr,qSIZE);
 	queue_init(done_ptr,qSIZE);
