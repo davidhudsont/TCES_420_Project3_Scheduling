@@ -101,17 +101,17 @@ int main() {
 	queue_init(run_ptr,qSIZE);
 	queue_init(io_ptr,qSIZE);
 	queue_init(done_ptr,qSIZE);
-	job j[jSIZE];
-	job *p = j;
 	srand(time(NULL));
 	for (int i=0; i<jSIZE; i++) {
-		init_job(p,i);
-		p++;
+		job * = malloc(sizof(job));
+		init_job(j,i);
+		init_job(p,&j);
+		
 	}
-	p =j;
+	
 	for (int i=0; i<jSIZE; i++) {
 		enqueue(run_ptr,*p);
-		p++;
+		
 	}
 	void * arg;
 	pthread_t cpu[8];
