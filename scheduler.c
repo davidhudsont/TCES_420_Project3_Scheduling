@@ -118,7 +118,7 @@ int main() {
 	
 	for (int i=0; i<8; i++) {
 		int rc = pthread_create(&cpu[i],NULL,cpu_thread,arg);
-		asssert(rc == 0);
+		assert(rc == 0);
 	}
 	while (!isEmpty(run_ptr)) {
 		
