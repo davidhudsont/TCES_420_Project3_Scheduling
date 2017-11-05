@@ -119,7 +119,7 @@ int main() {
 		int rc = pthread_create(&cpu,NULL,cpu_thread,arg);
 		asssert(rc == 0);
 	}
-	while (!isEmpty(run_ptr) {
+	while (!isEmpty(run_ptr)) {
 		
 	}
 	
