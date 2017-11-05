@@ -5,6 +5,7 @@
 #include <assert.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <semaphore.h>
 
 #define qSIZE 100
 #define jSIZE 40
@@ -53,7 +54,7 @@ sem_init(&sub_finished_lock,0,1);
 */
 void * cpu_thread(void * arg) { 
 	int*  thread = (int*)arg;
-	while () {
+	while (1==1) {
 		if (!isEmpty(run_ptr)) {
 			sem_wait(&sub_run);
 			sem_wait(&sub_run_lock);
@@ -85,7 +86,7 @@ void * cpu_thread(void * arg) {
 				sem_wait(&add_io);
 				sem_wait(&add_io_lock);
 				printf("Adding job to IO Queue, Thread number: %d\n",(int)thread);
-				equeue(io_ptr,cpu);
+				enqueue(io_ptr,cpu);
 				sem_post(&add_io_lock);
 				sem_post(&add_io);
 			}
@@ -108,7 +109,7 @@ int main() {
 	}
 	p =j;
 	for (int i=0; i<jSIZE; i++) {
-		enqueue(run_ptr,p);
+		enqueue(run_ptr,*p);
 		p++;
 	}
 	void * arg;
