@@ -117,7 +117,7 @@ int main() {
 	// pthread_t job_submission[4];
 	
 	for (int i=0; i<8; i++) {
-		int rc = pthread_create(&cpu,NULL,cpu_thread,arg);
+		int rc = pthread_create(&cpu[i],NULL,cpu_thread,arg);
 		asssert(rc == 0);
 	}
 	while (!isEmpty(run_ptr)) {
@@ -125,7 +125,7 @@ int main() {
 	}
 	
 	for (int i=0; i<8; i++) {
-		int rc = pthread_join(cpu,NULL);
+		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
 	}
 	/*
