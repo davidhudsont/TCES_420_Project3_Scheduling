@@ -94,6 +94,10 @@ int main() {
 	sem_init(&sub_finished,0,qSIZE);
 	sem_init(&sub_finished_lock,0,1);
 	
+	run_ptr = malloc(sizeof(queue);
+	run_ptr = malloc(sizeof(queue);
+	run_ptr = malloc(sizeof(queue);
+	
 	queue_init(run_ptr,qSIZE);
 	queue_init(io_ptr,qSIZE);
 	queue_init(done_ptr,qSIZE);
