@@ -61,7 +61,7 @@ void * cpu_thread(void * arg) {
 			printf("Grabing a job, Thread number: %d\n",(int)thread);
 			sem_post(&sub_run_lock);
 			sem_post(&sub_run);
-			sleep(cpu.phase[0][cpu.current_phase]);
+			sleep(cpu.phases[0][cpu.current_phase]);
 			printf("Job phase: %d complete, Thread number: %d\n", cpu.current_phase,(int)thread);
 			cpu.current_phase++;
 			if (cpu.current_phase == cpu.tasks) {
@@ -73,15 +73,15 @@ void * cpu_thread(void * arg) {
 				sem_post(&add_finished);
 				sem_post(&add_finished_lock);
 			}
-			if (cpu.phase[1][cpu.current_phase] == 0) {
+			if (cpu.phases[1][cpu.current_phase] == 0) {
 				sem_wait(&add_run);
 				sem_wait(&add_run_lock);
 				printf("Adding job to Run Queue, Thread number: %d\n", (int)thread);
-				equeue(run_ptr,cpu);
+				enqueue(run_ptr,cpu);
 				sem_post(&add_run_lock);
 				sem_post(&add_run);
 			}
-			if (cpu.phase[1][cpu.current_phase] == 1) {
+			if (cpu.phases[1][cpu.current_phase] == 1) {
 				sem_wait(&add_io);
 				sem_wait(&add_io_lock);
 				printf("Adding job to IO Queue, Thread number: %d\n",(int)thread);
