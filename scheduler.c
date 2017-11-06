@@ -54,7 +54,9 @@ void * cpu_thread(void * arg) {
 			//printf("Semaphore init %d\n",sem_getvalue(&sub_run_lock,&value));
 			sem_wait(&sub_run_lock);
 			//printf("Aquire Lock?\n");
-			job cpu = dequeue(run_ptr);
+			if (!isEmpty(run_ptr)){
+				job cpu = dequeue(run_ptr);
+			}
 			printf("Grabing a job, Thread number: %d\n",(int)thread);
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
@@ -118,7 +120,6 @@ int main() {
 	queue_init(done_ptr,qSIZE);
 		
 	srand(time(NULL));
-	printf("Before stupid loop\n");
 		
 	for (int i=0; i<jSIZE; i++) {
 		job* j=malloc(sizeof(job));
@@ -126,9 +127,7 @@ int main() {
 		enqueue(run_ptr,*j);
 		
 	}
-	printf("is queue empty? %d\n",isEmpty(run_ptr));
-	printf("Queue size: %d\n ",run_ptr->qsize);
-	printf("After enqueue\n");
+	
 	void * arg;
 	pthread_t cpu[8];
 	// pthread_t io[4];
@@ -138,15 +137,13 @@ int main() {
 		arg =(void*)i;
 		int rc = pthread_create(&cpu[i],NULL,cpu_thread,arg);
 		assert(rc == 0);
-	}
-	printf("After created threads\n");		
+	}		
 	//sleep(5);
 	
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
 	}
-	printf("After join\n");
 	/*
 	for (int i=0; i<4; i++) {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
