@@ -36,7 +36,7 @@ sem_t sub_finished;
 sem_t sub_finished_lock;
 
 sem_t counter_lock;
-int counter = 0;
+unsigned int counter = 0;
 
 void * cpu_thread(void * arg) { 
 	int*  thread = (int*)arg;
