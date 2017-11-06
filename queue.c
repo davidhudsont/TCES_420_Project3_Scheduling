@@ -1,3 +1,4 @@
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <queue.h>
@@ -12,7 +13,7 @@ int isFull(queue *q){
 }
 
 void queue_init(queue *q,int capacity) {
-	q->jobqueue = (job*)calloc(capacity,sizeof(job));
+	q->jobqueue = (job*)malloc(capacity*sizeof(job));
 	q->qcapacity = capacity;
 	q->head = 0;
 	q->tail = capacity-1;
@@ -26,10 +27,17 @@ void enqueue(queue *q,job j) {
 	q->qsize++;
 }
 
-job* dequeue(queue *q) {
-	if (isEmpty(q)) { return NULL;}
+job dequeue(queue *q) {
+	if (isEmpty(q)) {
+		job j;
+		return j;
+	}
 	job *ret = &q->jobqueue[q->head];
 	q->head = (q->head+1)%q->qcapacity;
 	q->qsize--;
-	return ret;
+	return *ret;
 }
+
+	    
+
+
