@@ -46,6 +46,7 @@ void * cpu_thread(void * arg) {
 			int value;
 			sem_wait(&sub_run_lock);
 			job cpu = dequeue(run_ptr);
+			if (cpu.job_id < 0) {continue;}
 			printf("Grabing a job, Thread number: %d\n",(int)thread);
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
