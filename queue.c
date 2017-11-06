@@ -30,6 +30,7 @@ void enqueue(queue *q,job j) {
 job dequeue(queue *q) {
 	if (isEmpty(q)) {
 		job j;
+		j->job_id =-1
 		return j;
 	}
 	job *ret = &q->jobqueue[q->head];
