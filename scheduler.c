@@ -1,22 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h>
+//#define _POSIX_C_SOURCE >= 199309L
 #include <time.h>
 #include <queue.h>
 #include <assert.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <semaphore.h>
+#include <stdint.h>
+
 
 #define qSIZE 100
 #define jSIZE 16
 
-// unsigned int sleep(unsigned int seconds);
-queue run;
-queue io;
-queue done;
-queue *run_ptr = &run;
-queue *io_ptr = &io;
-queue *done_ptr = &done;
+
+
+queue *run_ptr;
+queue *io_ptr;
+queue *done_ptr;
 
 sem_t add_run;
 sem_t add_run_lock;
@@ -34,29 +35,17 @@ sem_t add_finished_lock;
 sem_t sub_finished;
 sem_t sub_finished_lock;
 
+sem_t counter_lock;
+int counter = 0;
 
-/*
-		sem_wait(&sub_run);
-		sem_wait(&sub_lock);
-		job cpu = dequeue(run_ptr);
-		sem_post(&sub_lock);
-		sem_post(&sub_run);
-*/
 void * cpu_thread(void * arg) { 
 	int*  thread = (int*)arg;
-	//printf("thread number %d\n",(int)thread);
 	while (1) {
-		//printf("Do you get here %d\n",!isEmpty(run_ptr));
 		if (!isEmpty(run_ptr)) {
-			//printf("Boogalo\n");
 			//sem_wait(&sub_run);
 			int value;
-			//printf("Semaphore init %d\n",sem_getvalue(&sub_run_lock,&value));
 			sem_wait(&sub_run_lock);
-			//printf("Aquire Lock?\n");
-			if (!isEmpty(run_ptr)){
-				job cpu = dequeue(run_ptr);
-			}
+			job cpu = dequeue(run_ptr);
 			printf("Grabing a job, Thread number: %d\n",(int)thread);
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
@@ -90,16 +79,37 @@ void * cpu_thread(void * arg) {
 			}
 			
 		}
-		else {
-			printf("Here you are\n");
-			break;
-		}
 	}
-	printf("Hello\n");
 	pthread_exit(0);
+}
+void* job_submission_thread(void* arg){
+    int*  thread = (int*)arg;
+    struct timespec begin, end;
+    while(1){
+        job* j = malloc(sizeof(job));
+        init_job(j,counter);
+		sem_wait(&add_run_lock);
+        enqueue(run_ptr,*j);
+		free(j);
+		sem_post(&add_run_lock);
+		sem_wait(&counter_lock);
+        counter++;
+        sem_post(&counter_lock);
+        clock_gettime(CLOCK_MONOTONIC, &begin);
+        clock_gettime(CLOCK_MONOTONIC, &end);
+        while ((end.tv_sec - begin.tv_sec) >= 2){
+            sem_wait(&add_finished_lock);
+            if(!isEmpty(done_ptr)){
+                dequeue(done_ptr);
+            }
+            sem_post(&add_finished_lock);
+            clock_gettime(CLOCK_MONOTONIC, &end);
+        }
+    }
 }
 
 int main() {
+	// Initialization of Queue Locks
 	sem_init(&add_run,0,qSIZE);
 	sem_init(&add_run_lock,0,1);
 	sem_init(&sub_run,0,qSIZE);
@@ -112,6 +122,8 @@ int main() {
 	sem_init(&add_finished_lock,0,1);
 	sem_init(&sub_finished,0,qSIZE);
 	sem_init(&sub_finished_lock,0,1);
+	
+	// Memory Allocation and Initialization for Queues
 	run_ptr = malloc(sizeof(queue));
 	io_ptr = malloc(sizeof(queue));
 	done_ptr = malloc(sizeof(queue));
@@ -120,32 +132,35 @@ int main() {
 	queue_init(done_ptr,qSIZE);
 		
 	srand(time(NULL));
-		
-	for (int i=0; i<jSIZE; i++) {
-		job* j=malloc(sizeof(job));
-		init_job(j,i);
-		enqueue(run_ptr,*j);
-		free(j);
-		
-	}
+    void * arg;
+	printf("Before stupid loop\n");
+    
+    //***********************thien Nguyen ******************************///
+    
+	sem_init(&counter_lock,0,1);
+    pthread_t job_submission[4];
+    for(int i = 0 ; i <= 4; i++){
+        pthread_create(&job_submission[i], NULL,job_submission_thread,(void *)i );
+    }
+    
+    // pthread_t io[4];
 	
-	void * arg;
 	pthread_t cpu[8];
-	// pthread_t io[4];
-	// pthread_t job_submission[4];
 	
 	for (int i=0; i<8; i++) {
 		arg =(void*)i;
 		int rc = pthread_create(&cpu[i],NULL,cpu_thread,arg);
 		assert(rc == 0);
-	}		
+	}
+	printf("After created threads\n");		
 	//sleep(5);
-	
+	/*
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
 	}
-	/*
+	
+	printf("After join\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
 		asssert(rc == 0);
@@ -154,7 +169,6 @@ int main() {
 		int rc = pthread_create(&cpu,NULL,job_submission_thread,arg);
 		asssert(rc == 0);
 	}
-	
 	*/
 	for (int i=0; i<run_ptr->qsize; i++) {
 		free(run_ptr->jobqueue[i].phases[0]);
