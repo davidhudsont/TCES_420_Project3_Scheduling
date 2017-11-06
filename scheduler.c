@@ -125,6 +125,7 @@ int main() {
 		job* j=malloc(sizeof(job));
 		init_job(j,i);
 		enqueue(run_ptr,*j);
+		free(j);
 		
 	}
 	
@@ -154,7 +155,9 @@ int main() {
 		asssert(rc == 0);
 	}
 	*/
-	
+	free(run_ptr->jobqueue);
+	free(io_ptr->jobqueue);
+	free(done_ptr->jobqueue);
 	free(run_ptr);
 	free(io_ptr);
 	free(done_ptr);
