@@ -20,6 +20,13 @@ void queue_init(queue *q,int capacity) {
 	q->qsize = 0;
 }
 
+void queue_delete(queue *q) {
+	for (int i=0; i<q->qcapacity; i++){
+		delete_job(&q->jobqueue[i]);
+	}
+	free(q->jobqueue);
+	free(q);
+}
 void enqueue(queue *q,job j) {
 	if (isFull(q)) { return; } 
 	q->tail = (q->tail + 1)%q->qcapacity;
