@@ -45,7 +45,7 @@ int wait(int time){
 	clock_gettime(CLOCK_MONOTONIC,&begin);
 	clock_gettime(CLOCK_MONOTONIC,&end);
 	int elapsed;
-	while (elapsed<=3) {
+	while (elapsed<=time) {
 		clock_gettime(CLOCK_MONOTONIC, &end);
 		elapsed = end.tv_sec-begin.tv_sec;
 	}
