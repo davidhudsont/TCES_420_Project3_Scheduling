@@ -28,3 +28,10 @@ void init_job(job* j,int id) {
 	
 	return;
 }
+
+void delete_job(job *j) {
+	free(j->phases[0]);
+	free(j->phases[1]);
+	free(j->phases);
+	
+}
