@@ -90,7 +90,7 @@ void * cpu_thread(void * arg) {
 void* job_submission_thread(void* arg){
 	int*  thread = (int*)arg;
 	struct timespec begin, end;
-	while(1){
+	while(counter < jSIZE){
 		job* j = malloc(sizeof(job));
 		init_job(j,counter);
 		sem_wait(&add_run_lock);
