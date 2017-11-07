@@ -16,6 +16,7 @@ void init_job(job* j,int id) {
 	j->phases[0] = malloc(j->tasks*sizeof(int));
 	j->phases[1] = malloc(j->tasks*sizeof(int));
 	*/
+    free(j->phases);
 	j->phases = (int **)malloc(2*sizeof(int *));
 	for (int i=0; i<2; i++) {
 		j->phases[i] = (int *)malloc(j->tasks*sizeof(int));
