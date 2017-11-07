@@ -96,6 +96,7 @@ void* job_submission_thread(void* arg){
 		sem_wait(&counter_lock);
 		init_job(j,counter);
 		sem_wait(&add_run_lock);
+		printf("Queueing new job, Job submit thread: %d\n", (int)thread);
 		enqueue(run_ptr,*j);
 		free(j);
 		sem_post(&add_run_lock);
