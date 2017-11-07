@@ -1,5 +1,5 @@
 
 
 
-schedule: scheduler.c queue.c job.c
-        gcc -o run scheduler.c queue.c job.c -std=gnu99 -lpthread -I.
+schedule: thienscheduler.c queue.c job.c 
+	gcc -o run thienscheduler.c queue.c job.c -lpthread -std=gnu99 -I.
