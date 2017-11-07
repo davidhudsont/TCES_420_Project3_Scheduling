@@ -164,6 +164,7 @@ int main() {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
 	}
+	printf("What happened?");
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
