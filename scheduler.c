@@ -44,7 +44,7 @@ int wait(int time){
 	struct timespec begin, end;
 	clock_gettime(CLOCK_MONOTONIC,&begin);
 	clock_gettime(CLOCK_MONOTONIC,&end);
-	int elapsed;
+	int elapsed=0;
 	while (elapsed<=time) {
 		clock_gettime(CLOCK_MONOTONIC, &end);
 		elapsed = end.tv_sec-begin.tv_sec;
