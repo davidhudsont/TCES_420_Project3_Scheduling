@@ -169,29 +169,11 @@ int main() {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
 		asssert(rc == 0);
 	}
-	
 	*/
-	for (int i=0; i<run_ptr->qsize; i++) {
-		free(run_ptr->jobqueue[i].phases[0]);
-		free(run_ptr->jobqueue[i].phases[1]);
-		free(run_ptr->jobqueue[i].phases);
-
-	}	
-	for (int i=0; i<io_ptr->qsize; i++) {
-		free(io_ptr->jobqueue[i].phases[0]);
-		free(io_ptr->jobqueue[i].phases[1]);
-		free(io_ptr->jobqueue[i].phases);
-	}
-	for (int i=0; i<done_ptr->qsize; i++) {
-		free(done_ptr->jobqueue[i].phases[0]);
-		free(done_ptr->jobqueue[i].phases[1]);
-		free(done_ptr->jobqueue[i].phases);
-	}
-	free(run_ptr->jobqueue);
-	free(io_ptr->jobqueue);
-	free(done_ptr->jobqueue);
-	free(run_ptr);
-	free(io_ptr);
-	free(done_ptr);
+	
+	queue_delete(run_ptr);
+	queue_delete(io_ptr);
+	queue_delete(done_ptr);
+	
 	return 0;
 }
