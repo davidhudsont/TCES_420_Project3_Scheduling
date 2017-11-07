@@ -20,5 +20,5 @@ int isFull(queue *q);
  job dequeue(queue *q);
 
  void queue_init(queue *q,int size);
-
+ void queue_delete(queue *q);
 #endif 
