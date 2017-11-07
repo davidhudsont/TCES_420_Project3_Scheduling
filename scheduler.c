@@ -115,7 +115,7 @@ void* job_submission_thread(void* arg){
 		sem_post(&add_run_lock);
 		counter++;
 		sem_post(&counter_lock);
-		int t;
+		int t=0;
 		while (t!=1){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
