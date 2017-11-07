@@ -49,19 +49,20 @@ void * cpu_thread(void * arg) {
 			job cpu = dequeue(run_ptr);
 			if (cpu.job_id < 0) {
 				sem_post(&sub_run_lock);
+				printf("Stuff Stuff\n");
 				continue;
 			}
-			printf("Grabing a job, Thread number: %d\n",(int)thread);
+			printf("Grabing a job, CPU: %d\n",(int)thread);
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
 			sleep(cpu.phases[0][cpu.current_phase]);
-			printf("Job phase: %d complete, Thread number: %d\n", cpu.current_phase,(int)thread);
+			printf("Job phase: %d complete, CPU: %d\n", cpu.current_phase,(int)thread);
 			cpu.current_phase++;
 			if (cpu.current_phase == cpu.tasks) {
 				cpu.is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
-				printf("Adding job to finished Queue, Thread number: %d\n",(int)thread);
+				printf("Adding job to finished Queue, CPU: %d\n",(int)thread);
 				enqueue(done_ptr,cpu);
 				//sem_post(&add_finished);
 				sem_post(&add_finished_lock);
@@ -69,7 +70,7 @@ void * cpu_thread(void * arg) {
 			if (cpu.phases[1][cpu.current_phase] == 0) {
 				//sem_wait(&add_run);
 				sem_wait(&add_run_lock);
-				printf("Adding job to Run Queue, Thread number: %d\n", (int)thread);
+				printf("Adding job to Run Queue, CPU: %d\n", (int)thread);
 				enqueue(run_ptr,cpu);
 				sem_post(&add_run_lock);
 				//sem_post(&add_run);
@@ -77,7 +78,7 @@ void * cpu_thread(void * arg) {
 			if (cpu.phases[1][cpu.current_phase] == 1) {
 				//sem_wait(&add_io);
 				sem_wait(&add_io_lock);
-				printf("Adding job to IO Queue, Thread number: %d\n",(int)thread);
+				printf("Adding job to IO Queue, CPU: %d\n",(int)thread);
 				enqueue(io_ptr,cpu);
 				sem_post(&add_io_lock);
 				//sem_post(&add_io);
@@ -92,12 +93,12 @@ void* job_submission_thread(void* arg){
 	struct timespec begin, end;
 	while(counter < jSIZE){
 		job* j = malloc(sizeof(job));
+		sem_wait(&counter_lock);
 		init_job(j,counter);
 		sem_wait(&add_run_lock);
 		enqueue(run_ptr,*j);
 		free(j);
 		sem_post(&add_run_lock);
-		sem_wait(&counter_lock);
 		counter++;
 		sem_post(&counter_lock);
 		clock_gettime(CLOCK_MONOTONIC, &begin);
@@ -158,12 +159,15 @@ int main() {
 		assert(rc == 0);
 	}	
 	//sleep(5);
-	/*
+	for (int i=0; i<8; i++) {
+		int rc = pthread_join(job_submission[i],NULL);
+		assert(rc==0);
+	}
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
 	}
-
+	/*
 	printf("After join\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
