@@ -25,7 +25,7 @@ void queue_delete(queue *q) {
 		delete_job(&q->jobqueue[i]);
 	}
 	free(q->jobqueue);
-	free(q);
+	//free(q);
 }
 void enqueue(queue *q,job j) {
 	if (isFull(q)) { return; } 
@@ -40,10 +40,10 @@ job dequeue(queue *q) {
 		j.job_id =-1;
 		return j;
 	}
-	job *ret = &q->jobqueue[q->head];
+	job ret= q->jobqueue[q->head];
 	q->head = (q->head+1)%q->qcapacity;
 	q->qsize--;
-	return *ret;
+	return ret;
 }
 	    
 

@@ -11,9 +11,15 @@ void init_job(job* j,int id) {
 	j->current_phase = 0;
 	j->job_id = id;
 	j->tasks = rand()%4+2;
+	/*
 	j->phases = (int **)malloc(sizeof(int*)*2);
 	j->phases[0] = malloc(j->tasks*sizeof(int));
 	j->phases[1] = malloc(j->tasks*sizeof(int));
+	*/
+	j->phases = (int **)malloc(2*sizeof(int *));
+	for (int i=0; i<2; i++) {
+		j->phases[i] = (int *)malloc(j->tasks*sizeof(int));
+	}
 	for (int col=0; col<j->tasks; col++) {
 			int phase_type = rand()%2;
 			if (phase_type ==1) {

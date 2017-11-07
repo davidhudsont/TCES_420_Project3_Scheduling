@@ -37,7 +37,7 @@ sem_t sub_finished;
 sem_t sub_finished_lock;
 
 sem_t counter_lock;
-unsigned int counter = 0;
+unsigned int counter = 1;
 int stop = 0;
 
 int wait(int time){
@@ -49,6 +49,7 @@ int wait(int time){
 		clock_gettime(CLOCK_MONOTONIC, &end);
 		elapsed = end.tv_sec-begin.tv_sec;
 	}
+	return 1;
 }
 
 void * cpu_thread(void * arg) { 
@@ -105,7 +106,7 @@ void * cpu_thread(void * arg) {
 void* job_submission_thread(void* arg){
 	int*  thread = (int*)arg;
 	while(stop!=1){
-		job* j = malloc(sizeof(job));
+		job* j =(job*) malloc(sizeof(job));
 		sem_wait(&counter_lock);
 		init_job(j,counter);
 		sem_wait(&add_run_lock);
@@ -115,7 +116,7 @@ void* job_submission_thread(void* arg){
 		sem_post(&add_run_lock);
 		counter++;
 		sem_post(&counter_lock);
-		int t=0;
+		int t =0;
 		while (t!=1){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
@@ -147,22 +148,22 @@ int main() {
 	sem_init(&sub_finished_lock,0,1);
 
 	// Memory Allocation and Initialization for Queues
-	run_ptr = malloc(sizeof(queue));
-	io_ptr = malloc(sizeof(queue));
-	done_ptr = malloc(sizeof(queue));
+	run_ptr =(queue*) malloc(sizeof(queue));
+	io_ptr =(queue*) malloc(sizeof(queue));
+	done_ptr = (queue*)malloc(sizeof(queue));
 	queue_init(run_ptr,qSIZE);
 	queue_init(io_ptr,qSIZE);
 	queue_init(done_ptr,qSIZE);
 
 	srand(time(NULL));
 	printf("Before stupid loop\n");
-
+	stop = 0;
 	//***********************thien Nguyen ******************************///
 	// global counter lock init
 	sem_init(&counter_lock,0,1);
 	// Job submission thread initialization
 	pthread_t job_submission[4];
-	for(int i = 0 ; i <= 4; i++){
+	for(int i = 0 ; i < 4; i++){
 		int rc = pthread_create(&job_submission[i], NULL,job_submission_thread,(void *)i );
 		assert(rc == 0);
 	}
@@ -187,6 +188,8 @@ int main() {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
 	}
+	printf("# of Jobs: %d\n",counter-1);
+	printf("DONE!!!!!!!\n");
 	/*
 	printf("After join\n");
 	for (int i=0; i<4; i++) {
@@ -194,10 +197,47 @@ int main() {
 		asssert(rc == 0);
 	}
 	*/
-	
-	queue_delete(run_ptr);
-	queue_delete(io_ptr);
-	queue_delete(done_ptr);
-	
+	/*
+	for (int i=0; i<run_ptr->qcapacity; i++) {
+		free(run_ptr->jobqueue[i].phases[0]);
+		free(run_ptr->jobqueue[i].phases[1]);
+		free(run_ptr->jobqueue[i].phases);
+		
+	}	
+	for (int i=0; i<io_ptr->qcapacity; i++) {
+		free(io_ptr->jobqueue[i].phases[0]);
+		free(io_ptr->jobqueue[i].phases[1]);
+		free(io_ptr->jobqueue[i].phases);
+	}
+	for (int i=0; i<done_ptr->qcapacity; i++) {
+		free(done_ptr->jobqueue[i].phases[0]);
+		free(done_ptr->jobqueue[i].phases[1]);
+		free(done_ptr->jobqueue[i].phases);
+	}
+	*/
+	/*
+	for (int i=0; i<run_ptr->qsize; i++) {
+		free(run_ptr->jobqueue[i].phases[0]);
+		free(run_ptr->jobqueue[i].phases[1]);
+		free(run_ptr->jobqueue[i].phases);
+		
+	}	
+	for (int i=0; i<io_ptr->qsize; i++) {
+		free(io_ptr->jobqueue[i].phases[0]);
+		free(io_ptr->jobqueue[i].phases[1]);
+		free(io_ptr->jobqueue[i].phases);
+	}
+	for (int i=0; i<done_ptr->qsize; i++) {
+		free(done_ptr->jobqueue[i].phases[0]);
+		free(done_ptr->jobqueue[i].phases[1]);
+		free(done_ptr->jobqueue[i].phases);
+	}
+	free(run_ptr->jobqueue);
+	free(io_ptr->jobqueue);
+	free(done_ptr->jobqueue);
+	free(run_ptr);
+	free(io_ptr);
+	free(done_ptr);
+	*/
 	return 0;
 }
