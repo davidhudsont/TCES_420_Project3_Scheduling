@@ -38,10 +38,22 @@ sem_t sub_finished_lock;
 
 sem_t counter_lock;
 unsigned int counter = 0;
+int stop = 0;
+
+int wait(int time){
+	struct timespec begin, end;
+	clock_gettime(CLOCK_MONOTONIC,&begin);
+	clock_gettime(CLOCK_MONOTONIC,&end);
+	int elapsed;
+	while (elapsed<=3) {
+		clock_gettime(CLOCK_MONOTONIC, &end);
+		elapsed = end.tv_spec-begin.tv_spec;
+	}
+}
 
 void * cpu_thread(void * arg) { 
 	int*  thread = (int*)arg;
-	while (1) {
+	while (stop!=1) {
 		if (!isEmpty(run_ptr)) {
 			//sem_wait(&sub_run);
 			int value;
@@ -90,8 +102,7 @@ void * cpu_thread(void * arg) {
 }
 void* job_submission_thread(void* arg){
 	int*  thread = (int*)arg;
-	struct timespec begin, end;
-	while(1){
+	while(stop!=1){
 		job* j = malloc(sizeof(job));
 		sem_wait(&counter_lock);
 		init_job(j,counter);
@@ -102,15 +113,12 @@ void* job_submission_thread(void* arg){
 		sem_post(&add_run_lock);
 		counter++;
 		sem_post(&counter_lock);
-		clock_gettime(CLOCK_MONOTONIC, &begin);
-		clock_gettime(CLOCK_MONOTONIC, &end);
-		while ((end.tv_sec - begin.tv_sec) >= 3){
+		while (wait(2)!=1){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
 			dequeue(done_ptr);
 			sem_post(&sub_finished_lock);
 		    }
-		    clock_gettime(CLOCK_MONOTONIC, &end);
 		}
 	}
 	pthread_exit(0);
@@ -160,6 +168,8 @@ int main() {
 		assert(rc == 0);
 	}	
 	//sleep(5);
+	wait(30);
+	stop = 1;
 	for (int i=0; i<4; i++) {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
