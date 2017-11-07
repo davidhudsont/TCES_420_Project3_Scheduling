@@ -105,11 +105,11 @@ void* job_submission_thread(void* arg){
 		clock_gettime(CLOCK_MONOTONIC, &begin);
 		clock_gettime(CLOCK_MONOTONIC, &end);
 		while ((end.tv_sec - begin.tv_sec) >= 2){
-		    sem_wait(&add_finished_lock);
 		    if(!isEmpty(done_ptr)){
+			sem_wait(&sub_finished_lock);
 			dequeue(done_ptr);
+			sem_post(&sub_finished_lock);
 		    }
-		    sem_post(&add_finished_lock);
 		    clock_gettime(CLOCK_MONOTONIC, &end);
 		}
 	}
