@@ -98,6 +98,8 @@ void * cpu_thread(void * arg) {
 			
 		}
 	}
+	
+	printf("Times UP!!!, Submit: %d\n",(int)thread);
 	pthread_exit(0);
 }
 void* job_submission_thread(void* arg){
@@ -121,6 +123,8 @@ void* job_submission_thread(void* arg){
 		    }
 		}
 	}
+	
+	printf("Times UP!!!, Submit: %d\n",(int)thread);
 	pthread_exit(0);
 }
 
@@ -170,6 +174,7 @@ int main() {
 	//sleep(5);
 	wait(30);
 	stop = 1;
+	printf("Times UP!!!\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
