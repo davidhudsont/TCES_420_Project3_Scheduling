@@ -99,7 +99,7 @@ void * cpu_thread(void * arg) {
 		}
 	}
 	
-	printf("Times UP!!!, Submit: %d\n",(int)thread);
+	printf("Times UP!!!, CPU: %d\n",(int)thread);
 	pthread_exit(0);
 }
 void* job_submission_thread(void* arg){
