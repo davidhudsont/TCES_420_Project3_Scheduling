@@ -115,13 +115,15 @@ void* job_submission_thread(void* arg){
 		sem_post(&add_run_lock);
 		counter++;
 		sem_post(&counter_lock);
-		while (wait(2)!=1){
+		int t;
+		while (t!=1){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
 			printf("Removing finished job, Submit: %d\n", (int)thread);
 			dequeue(done_ptr);
 			sem_post(&sub_finished_lock);
 		    }
+		    t = wait(2);
 		}
 	}
 	
