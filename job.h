@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 
+#ifndef LIST_J_
+#define LIST_J_
+
 typedef struct Job {
 	int job_id; 
 	int** phases;
@@ -12,4 +15,6 @@ typedef struct Job {
 
 void init_job(job* j,int id);
 
-void free_job(job* j);
+void delete_job(job* j);
+
+#endif
