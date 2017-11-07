@@ -160,7 +160,7 @@ int main() {
 		assert(rc == 0);
 	}	
 	//sleep(5);
-	for (int i=0; i<8; i++) {
+	for (int i=0; i<4; i++) {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
 	}
