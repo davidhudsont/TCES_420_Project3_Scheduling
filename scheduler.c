@@ -205,6 +205,10 @@ int main() {
 	printf("Before stupid loop\n");
 	stop = 0;
 	//***********************thien Nguyen ******************************///
+	
+	// FILE pointer initilization
+	FILE *fp;
+	fp = open("output.txt","w");
 	// global counter lock init
 	sem_init(&counter_lock,0,1);
 	// Job submission thread initialization
@@ -243,48 +247,12 @@ int main() {
 	}
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
+	fprintf(fp,"# of Jobs: %d\n",counter-1);
+	fprintf(fp,"DONE!!!!!!!\n");
+	
+	fclose(fp);
 	/*
-	printf("After join\n");
-	for (int i=0; i<4; i++) {
-		int rc = pthread_create(&cpu,NULL,io_thread,arg);
-		asssert(rc == 0);
-	}
-	*/
-	/*
-	for (int i=0; i<run_ptr->qcapacity; i++) {
-		free(run_ptr->jobqueue[i].phases[0]);
-		free(run_ptr->jobqueue[i].phases[1]);
-		free(run_ptr->jobqueue[i].phases);
-		
-	}	
-	for (int i=0; i<io_ptr->qcapacity; i++) {
-		free(io_ptr->jobqueue[i].phases[0]);
-		free(io_ptr->jobqueue[i].phases[1]);
-		free(io_ptr->jobqueue[i].phases);
-	}
-	for (int i=0; i<done_ptr->qcapacity; i++) {
-		free(done_ptr->jobqueue[i].phases[0]);
-		free(done_ptr->jobqueue[i].phases[1]);
-		free(done_ptr->jobqueue[i].phases);
-	}
-	*/
-	/*
-	for (int i=0; i<run_ptr->qsize; i++) {
-		free(run_ptr->jobqueue[i].phases[0]);
-		free(run_ptr->jobqueue[i].phases[1]);
-		free(run_ptr->jobqueue[i].phases);
-		
-	}	
-	for (int i=0; i<io_ptr->qsize; i++) {
-		free(io_ptr->jobqueue[i].phases[0]);
-		free(io_ptr->jobqueue[i].phases[1]);
-		free(io_ptr->jobqueue[i].phases);
-	}
-	for (int i=0; i<done_ptr->qsize; i++) {
-		free(done_ptr->jobqueue[i].phases[0]);
-		free(done_ptr->jobqueue[i].phases[1]);
-		free(done_ptr->jobqueue[i].phases);
-	}
+	
 	free(run_ptr->jobqueue);
 	free(io_ptr->jobqueue);
 	free(done_ptr->jobqueue);
