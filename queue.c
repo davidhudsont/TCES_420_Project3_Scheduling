@@ -13,14 +13,18 @@ int isFull(queue *q){
 }
 
 void queue_init(queue *q,int capacity) {
-	q->jobqueue = (job*)calloc(capacity,sizeof(job));
+	q->jobqueue = (job**)malloc(capacity*sizeof(job*));
 	q->qcapacity = capacity;
 	q->head = 0;
 	q->tail = capacity-1;
 	q->qsize = 0;
 }
 
-void enqueue(queue *q,job j) {
+void queue_delete(queue *q) {
+	free(q->jobqueue);
+	free(q);
+}
+void enqueue(queue *q,job *j) {
 	if (isFull(q)) { return; } 
 	q->tail = (q->tail + 1)%q->qcapacity;
 	q->jobqueue[q->tail] = j;
@@ -28,12 +32,12 @@ void enqueue(queue *q,job j) {
 }
 
 job* dequeue(queue *q) {
-	if (isEmpty(q)) { return NULL;}
-	job *ret = &q->jobqueue[q->head];
+	if (isEmpty(q)) {
+		return NULL;
+	}
+	job* ret= q->jobqueue[q->head];
 	q->head = (q->head+1)%q->qcapacity;
 	q->qsize--;
 	return ret;
 }
-	    
-
 

@@ -8,17 +8,17 @@
 typedef struct Queue {
  	int qsize,qcapacity;	
  	int head,tail;
- 	job* jobqueue; 
+ 	job** jobqueue; 
  }queue;
  
 int isEmpty(queue *q);
 
 int isFull(queue *q);
  
- void enqueue(queue *q,job j);
+void enqueue(queue *q,job *j);
  
- job* dequeue(queue *q);
+job *dequeue(queue *q);
 
- void queue_init(queue *q,int size);
-
+void queue_init(queue *q,int size);
+void queue_delete(queue *q);
 #endif 
