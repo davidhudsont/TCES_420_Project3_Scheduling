@@ -41,7 +41,7 @@ unsigned int counter = 1;
 int stop = 0;
 
 // FILE pointer initilization
-FILE *fp;
+
 
 int wait(int time){
 	struct timespec begin, end;
@@ -67,20 +67,18 @@ void * cpu_thread(void * arg) {
 				continue;
 			}
 			printf("Grabing a job for CPU #: %d\n",(int)thread);
-			fprintf(fp,"Grabing a job for CPU #: %d\n",(int)thread);
+			
 			
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
 			sleep(cpu->phases[0][cpu->current_phase]);
 			printf("Job phase: %d complete, CPU #: %d\n", cpu->current_phase,(int)thread);
-			fprintf(fp,"Job phase: %d complete, CPU #: %d\n",cpu->current_phase,(int)thread);
 			cpu->current_phase++;
 			if (cpu->current_phase == cpu->tasks) {
 				cpu->is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
 				printf("Adding job to Done Queue, CPU #: %d\n",(int)thread);
-				fprintf(fp, "Adding job to Done Queue, CPU #: %d\n",(int)thread);
 				enqueue(done_ptr,cpu);
 				//sem_post(&add_finished);
 				sem_post(&add_finished_lock);
@@ -89,7 +87,6 @@ void * cpu_thread(void * arg) {
 				//sem_wait(&add_run);
 				sem_wait(&add_run_lock);
 				printf("Adding job to Run Queue, CPU #: %d\n", (int)thread);
-				fprintf(fp,"Adding job to Run Queue, CPU #: %d\n", (int)thread);
 				enqueue(run_ptr,cpu);
 				sem_post(&add_run_lock);
 				//sem_post(&add_run);
@@ -98,7 +95,6 @@ void * cpu_thread(void * arg) {
 				//sem_wait(&add_io);
 				sem_wait(&add_io_lock);
 				printf("Adding job to IO Queue, CPU #: %d\n",(int)thread);
-				fprintf(fp,"Adding job to IO Queue, CPU #: %d\n",(int)thread);
 				enqueue(io_ptr,cpu);
 				sem_post(&add_io_lock);
 				//sem_post(&add_io);
@@ -108,7 +104,6 @@ void * cpu_thread(void * arg) {
 	}
 	
 	printf("CPU #: is exiting %d\n",(int)thread);
-	fprintf(fp,"CPU #: is exiting %d\n",(int)thread);
 	pthread_exit(0);
 }
 void* job_submission_thread(void* arg){
@@ -119,7 +114,6 @@ void* job_submission_thread(void* arg){
 		init_job(j,counter);
 		sem_wait(&add_run_lock);
 		printf("Queueing new job, Submission Thread #: %d\n", (int)thread);
-		fprintf(fp,"Queueing new job, Submission Thread #: %d\n", (int)thread);
 		enqueue(run_ptr,j);
 		sem_post(&add_run_lock);
 		counter++;
@@ -130,7 +124,6 @@ void* job_submission_thread(void* arg){
 			sem_wait(&sub_finished_lock);
 			if (!isEmpty(done_ptr)) {
 				printf("Removing finished job, Submit: %d\n", (int)thread);
-				fprintf(fp,"Removing finished job, Submit: %d\n", (int)thread);
 				j = dequeue(done_ptr);
 				delete_job(j);
 				free(j);
@@ -144,7 +137,6 @@ void* job_submission_thread(void* arg){
 		}
 	}
 	printf("Submission Thread #: is exiting %d\n",(int)thread);
-	fprintf(fp,"Submission Thread #: is exiting %d\n",(int)thread);
 	pthread_exit(0);
 }
 
@@ -160,19 +152,16 @@ void * io_thread(void * arg) {
 				continue;
 			}
 			printf("Grabing a job for IO: %d\n",(int)thread);
-			fprintf(fp,"Grabing a job for IO #: %d\n",(int)thread);
 			sem_post(&sub_io_lock);
 			//sem_post(&sub_run);
 			sleep(io->phases[0][io->current_phase]);
 			printf("Job phase: %d complete, IO #: %d\n", io->current_phase,(int)thread);
-			fprintf(fp,"Job phase: %d complete, IO #: %d\n", io->current_phase,(int)thread);
 			io->current_phase++;
 			if (io->current_phase == io->tasks) {
 				io->is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
 				printf("Adding job to Done Queue, IO: %d\n",(int)thread);
-				fprintf(fp,"Adding job to Done Queue, IO: %d\n",(int)thread);
 				enqueue(done_ptr,io);
 				//sem_post(&add_finished);
 				sem_post(&add_finished_lock);
@@ -181,7 +170,6 @@ void * io_thread(void * arg) {
 				//sem_wait(&add_run);
 				sem_wait(&add_run_lock);
 				printf("Adding job to Run Queue, IO #: %d\n", (int)thread);
-				fprintf(fp,"Adding job to Run Queue, IO #: %d\n", (int)thread);
 				enqueue(run_ptr,io);
 				sem_post(&add_run_lock);
 				//sem_post(&add_run);
@@ -190,13 +178,13 @@ void * io_thread(void * arg) {
 				//sem_wait(&add_io);
 				sem_wait(&add_io_lock);
 				printf("Adding job to CPU Queue, IO #: %d\n",(int)thread);
-				fprintf(fp,"Adding job to CPU Queue, IO #: %d\n",(int)thread);
 				enqueue(io_ptr,io);
 				sem_post(&add_io_lock);
 				//sem_post(&add_io);
 			}	
 		}
 	}
+	printf("IO #: is exiting %d\n",(int)thread);
 	pthread_exit(0);
 }
 
@@ -224,12 +212,10 @@ int main() {
 	queue_init(done_ptr,qSIZE);
 
 	srand(time(NULL));
-	printf("Before stupid loop\n");
 	stop = 0;
 	//***********************thien Nguyen ******************************///
 	
 	
-	fp = open("output.txt","w");
 	// global counter lock init
 	sem_init(&counter_lock,0,1);
 	// Job submission thread initialization
@@ -267,9 +253,8 @@ int main() {
 	}
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
-	fprintf(fp,"# of Jobs: %d\n",counter-1);
-	fprintf(fp,"DONE!!!!!!!\n");
-	
+	FILE *fp;
+	fp = freopen("output.txt","w",stdout);
 	fclose(fp);
 	/*
 	
