@@ -59,7 +59,7 @@ void * cpu_thread(void * arg) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_run_lock);
 			job* cpu = dequeue(run_ptr);
-			if (cpu==NULL) {
+			if (cpu== NULL) {
 				sem_post(&sub_run_lock);
 				printf("Stuff Stuff\n");
 				continue;
@@ -124,7 +124,7 @@ void* job_submission_thread(void* arg){
             		free(j);
 			sem_post(&sub_finished_lock);
 		    }
-		    t = wait(2);
+		    t = wait(1);
 		}
 	}
 	printf("Times UP!!!, Submit: %d\n",(int)thread);
@@ -138,7 +138,7 @@ void * io_thread(void * arg) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_io_lock);
 			job *io = dequeue(io_ptr);
-			if (io==NULL) {
+			if (io==NULL ) {
 				sem_post(&sub_io_lock);
 				continue;
 			}
@@ -225,13 +225,14 @@ int main() {
 		int rc = pthread_create(&io[i],NULL,io_thread,(void *)i);
 		assert(rc == 0);
 	}
-	wait(30);
+	wait(60);
 	stop = 1;
 	printf("Times UP!!!\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
 	}
+	printf("What happened?");
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
@@ -243,6 +244,7 @@ int main() {
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
 	/*
+	printf("After join\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
 		asssert(rc == 0);
