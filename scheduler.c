@@ -121,15 +121,62 @@ void* job_submission_thread(void* arg){
 			sem_wait(&sub_finished_lock);
 			printf("Removing finished job, Submit: %d\n", (int)thread);
 			j = dequeue(done_ptr);
-            delete_job(j);
-            free(j);
+            		delete_job(j);
+            		free(j);
 			sem_post(&sub_finished_lock);
 		    }
 		    t = wait(2);
 		}
 	}
-	
 	printf("Times UP!!!, Submit: %d\n",(int)thread);
+	pthread_exit(0);
+}
+
+void * io_thread(void * arg) { 
+	int*  thread = (int*)arg;
+	while (stop!=1) {
+		if (!isEmpty(run_ptr)) {
+			//sem_wait(&sub_run);
+			int value;
+			sem_wait(&sub_run_lock);
+			job *io = dequeue(run_ptr);
+			if (io->job_id < 0) {
+				sem_post(&sub_run_lock);
+				continue;
+			}
+			printf("Grabing a job, Thread number: %d\n",(int)thread);
+			sem_post(&sub_run_lock);
+			//sem_post(&sub_run);
+			sleep(io->phases[0][io->current_phase]);
+			printf("Job phase: %d complete, Thread number: %d\n", io->current_phase,(int)thread);
+			io->current_phase++;
+			if (io->current_phase == io->tasks) {
+				io.is_completed = 1;
+				//sem_wait(&add_finished);
+				sem_wait(&add_finished_lock);
+				printf("Adding job to finished Queue, Thread number: %d\n",(int)thread);
+				enqueue(done_ptr,io);
+				//sem_post(&add_finished);
+				sem_post(&add_finished_lock);
+			}
+			if (io->phases[1][io->current_phase] == 0) {
+				//sem_wait(&add_run);
+				sem_wait(&add_run_lock);
+				printf("Adding job to Run Queue, Thread number: %d\n", (int)thread);
+				enqueue(run_ptr,io);
+				sem_post(&add_run_lock);
+				//sem_post(&add_run);
+			}
+			if (io->phases[1][io->current_phase] == 1) {
+				//sem_wait(&add_io);
+				sem_wait(&add_io_lock);
+				printf("Adding job to CPU Queue, Thread number: %d\n",(int)thread);
+				enqueue(cpu_ptr,io);
+				sem_post(&add_io_lock);
+				//sem_post(&add_io);
+			}	
+		}
+	}
 	pthread_exit(0);
 }
 
@@ -168,15 +215,18 @@ int main() {
 		int rc = pthread_create(&job_submission[i], NULL,job_submission_thread,(void *)i );
 		assert(rc == 0);
 	}
-
-	// pthread_t io[4];
 	// CPU thread initialization
 	pthread_t cpu[8];
 	for (int i=0; i<8; i++) {
 		int rc = pthread_create(&cpu[i],NULL,cpu_thread,(void *)i);
 		assert(rc == 0);
-	}	
-	//sleep(5);
+	}
+	// IO thread initialization
+	pthread_t io[4];
+	for (int i=0; i<4; i++) {
+		int rc = pthread_create(&io[i],NULL,cpu_thread,(void *)i);
+		assert(rc == 0);
+	}
 	wait(30);
 	stop = 1;
 	printf("Times UP!!!\n");
@@ -187,6 +237,10 @@ int main() {
 	printf("What happened?");
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
+		assert(rc==0);
+	}
+	for (int i=0; i<4; i++) {
+		int rc = pthread_join(io[i],NULL);
 		assert(rc==0);
 	}
 	printf("# of Jobs: %d\n",counter-1);
