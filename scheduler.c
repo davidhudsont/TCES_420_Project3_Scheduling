@@ -57,7 +57,6 @@ void * cpu_thread(void * arg) {
 	while (stop!=1) {
 		if (!isEmpty(run_ptr)) {
 			//sem_wait(&sub_run);
-			int value;
 			sem_wait(&sub_run_lock);
 			job* cpu = dequeue(run_ptr);
 			if (cpu->job_id < 0) {
@@ -135,11 +134,10 @@ void* job_submission_thread(void* arg){
 void * io_thread(void * arg) { 
 	int*  thread = (int*)arg;
 	while (stop!=1) {
-		if (!isEmpty(run_ptr)) {
+		if (!isEmpty(io_ptr)) {
 			//sem_wait(&sub_run);
-			int value;
 			sem_wait(&sub_run_lock);
-			job *io = dequeue(run_ptr);
+			job *io = dequeue(io_ptr);
 			if (io->job_id < 0) {
 				sem_post(&sub_run_lock);
 				continue;
