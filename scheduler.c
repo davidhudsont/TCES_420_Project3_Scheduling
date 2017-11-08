@@ -133,7 +133,7 @@ void* job_submission_thread(void* arg){
 			sem_post(&sub_finished_lock);
 			}
 		    }
-		    t = wait(1);
+		    t = wait(2);
 		}
 	}
 	printf("Submission Thread #: is exiting %d\n",(int)thread);
@@ -236,7 +236,7 @@ int main() {
 		int rc = pthread_create(&io[i],NULL,io_thread,(void *)i);
 		assert(rc == 0);
 	}
-	wait(60);
+	wait(30);
 	stop = 1;
 	printf("Times UP!!!\n");
 	for (int i=0; i<4; i++) {
