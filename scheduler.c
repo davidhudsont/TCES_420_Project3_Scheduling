@@ -129,12 +129,12 @@ void* job_submission_thread(void* arg){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
 			if (!isEmpty(done_ptr)) {
-			printf("Removing finished job, Submit: %d\n", (int)thread);
-			fprintf(fp,"Removing finished job, Submit: %d\n", (int)thread);
-			j = dequeue(done_ptr);
-            		delete_job(j);
-            		free(j);
-			sem_post(&sub_finished_lock);
+				printf("Removing finished job, Submit: %d\n", (int)thread);
+				fprintf(fp,"Removing finished job, Submit: %d\n", (int)thread);
+				j = dequeue(done_ptr);
+				delete_job(j);
+				free(j);
+				sem_post(&sub_finished_lock);
 			}
 			else {
 			sem_post(&sub_finished_lock);
