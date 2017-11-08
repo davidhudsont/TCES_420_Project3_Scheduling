@@ -222,7 +222,7 @@ int main() {
 	// IO thread initialization
 	pthread_t io[4];
 	for (int i=0; i<4; i++) {
-		int rc = pthread_create(&io[i],NULL,cpu_thread,(void *)i);
+		int rc = pthread_create(&io[i],NULL,io_thread,(void *)i);
 		assert(rc == 0);
 	}
 	wait(30);
