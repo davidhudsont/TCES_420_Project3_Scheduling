@@ -36,9 +36,7 @@ void enqueue(queue *q,job *j) {
 
 job* dequeue(queue *q) {
 	if (isEmpty(q)) {
-		job* j;
-		j->job_id =-1;
-		return j;
+		return NULL;
 	}
 	job* ret= q->jobqueue[q->head];
 	q->head = (q->head+1)%q->qcapacity;
