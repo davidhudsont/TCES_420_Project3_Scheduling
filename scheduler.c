@@ -40,6 +40,9 @@ sem_t counter_lock;
 unsigned int counter = 1;
 int stop = 0;
 
+// FILE pointer initilization
+FILE *fp;
+
 int wait(int time){
 	struct timespec begin, end;
 	clock_gettime(CLOCK_MONOTONIC,&begin);
@@ -125,7 +128,7 @@ void* job_submission_thread(void* arg){
 		while (t!=1){
 		    if(!isEmpty(done_ptr)){
 			sem_wait(&sub_finished_lock);
-			if (!isEmpty(done_ptr) {
+			if (!isEmpty(done_ptr)) {
 			printf("Removing finished job, Submit: %d\n", (int)thread);
 			fprintf(fp,"Removing finished job, Submit: %d\n", (int)thread);
 			job *j = dequeue(done_ptr);
@@ -151,16 +154,13 @@ void * io_thread(void * arg) {
 		if (!isEmpty(io_ptr)) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_io_lock);
-			if (isEmpty(io_ptr)) {
-				job *io = dequeue(io_ptr);
-				sem_post(&sub_io_lock);
-			}
-			else {
+			job *io = dequeue(io_ptr);
+			if (io==NULL) {
 				sem_post(&sub_io_lock);
 				continue;
 			}
 			printf("Grabing a job for IO: %d\n",(int)thread);
-			fprintf(fp,"Graving a job for IO #: %d\n",(int)thread);
+			fprintf(fp,"Grabing a job for IO #: %d\n",(int)thread);
 			sem_post(&sub_io_lock);
 			//sem_post(&sub_run);
 			sleep(io->phases[0][io->current_phase]);
@@ -228,8 +228,7 @@ int main() {
 	stop = 0;
 	//***********************thien Nguyen ******************************///
 	
-	// FILE pointer initilization
-	FILE *fp;
+	
 	fp = open("output.txt","w");
 	// global counter lock init
 	sem_init(&counter_lock,0,1);
