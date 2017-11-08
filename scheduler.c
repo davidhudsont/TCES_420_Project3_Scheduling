@@ -151,7 +151,7 @@ void * io_thread(void * arg) {
 			printf("Job phase: %d complete, Thread number: %d\n", io->current_phase,(int)thread);
 			io->current_phase++;
 			if (io->current_phase == io->tasks) {
-				io.is_completed = 1;
+				io->is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
 				printf("Adding job to finished Queue, Thread number: %d\n",(int)thread);
@@ -171,7 +171,7 @@ void * io_thread(void * arg) {
 				//sem_wait(&add_io);
 				sem_wait(&add_io_lock);
 				printf("Adding job to CPU Queue, Thread number: %d\n",(int)thread);
-				enqueue(cpu_ptr,io);
+				enqueue(io_ptr,io);
 				sem_post(&add_io_lock);
 				//sem_post(&add_io);
 			}	
