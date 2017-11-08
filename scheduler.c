@@ -69,13 +69,15 @@ void * cpu_thread(void * arg) {
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
 			sleep(cpu->phases[0][cpu->current_phase]);
-			printf("Job phase: %d complete, CPU: %d\n", cpu->current_phase,(int)thread);
+			printf("Job phase: %d complete, CPU #: %d\n", cpu->current_phase,(int)thread);
+			fprintf(fp,"Job phase: %d complete, CPU #: %d\n",cpu->current_phase,(int)thread);
 			cpu->current_phase++;
 			if (cpu->current_phase == cpu->tasks) {
 				cpu->is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
-				printf("Adding job to finished Queue, CPU: %d\n",(int)thread);
+				printf("Adding job to Done Queue, CPU #: %d\n",(int)thread);
+				fprintf(fp, "Adding job to Done Queue, CPU #: %d\n",(int)thread);
 				enqueue(done_ptr,cpu);
 				//sem_post(&add_finished);
 				sem_post(&add_finished_lock);
