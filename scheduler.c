@@ -136,14 +136,14 @@ void * io_thread(void * arg) {
 	while (stop!=1) {
 		if (!isEmpty(io_ptr)) {
 			//sem_wait(&sub_run);
-			sem_wait(&sub_run_lock);
+			sem_wait(&sub_io_lock);
 			job *io = dequeue(io_ptr);
 			if (io->job_id < 0) {
 				sem_post(&sub_run_lock);
 				continue;
 			}
 			printf("Grabing a job, Thread number: %d\n",(int)thread);
-			sem_post(&sub_run_lock);
+			sem_post(&sub_io_lock);
 			//sem_post(&sub_run);
 			sleep(io->phases[0][io->current_phase]);
 			printf("Job phase: %d complete, Thread number: %d\n", io->current_phase,(int)thread);
