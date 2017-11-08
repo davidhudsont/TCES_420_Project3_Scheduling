@@ -139,7 +139,7 @@ void * io_thread(void * arg) {
 			sem_wait(&sub_io_lock);
 			job *io = dequeue(io_ptr);
 			if (io->job_id < 0) {
-				sem_post(&sub_run_lock);
+				sem_post(&sub_io_lock);
 				continue;
 			}
 			printf("Grabing a job,  IO: %d\n",(int)thread);
