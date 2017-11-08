@@ -232,7 +232,6 @@ int main() {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
 	}
-	printf("What happened?");
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
@@ -244,7 +243,6 @@ int main() {
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
 	/*
-	printf("After join\n");
 	for (int i=0; i<4; i++) {
 		int rc = pthread_create(&cpu,NULL,io_thread,arg);
 		asssert(rc == 0);
