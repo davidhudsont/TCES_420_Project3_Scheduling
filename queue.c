@@ -21,11 +21,8 @@ void queue_init(queue *q,int capacity) {
 }
 
 void queue_delete(queue *q) {
-	for (int i=0; i<q->qcapacity; i++){
-		delete_job(q->jobqueue[i]);
-	}
 	free(q->jobqueue);
-	//free(q);
+	free(q);
 }
 void enqueue(queue *q,job *j) {
 	if (isFull(q)) { return; } 
