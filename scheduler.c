@@ -61,10 +61,11 @@ void * cpu_thread(void * arg) {
 			job* cpu = dequeue(run_ptr);
 			if (cpu== NULL) {
 				sem_post(&sub_run_lock);
-				printf("Stuff Stuff\n");
 				continue;
 			}
-			printf("Grabing a job, CPU: %d\n",(int)thread);
+			printf("Grabing a job for CPU #: %d\n",(int)thread);
+			fprintf(fp,"Grabing a job for CPU #: %d\n",(int)thread);
+			
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
 			sleep(cpu->phases[0][cpu->current_phase]);
@@ -236,7 +237,6 @@ int main() {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
 	}
-	printf("What happened?");
 	for (int i=0; i<8; i++) {
 		int rc = pthread_join(cpu[i],NULL);
 		assert(rc==0);
