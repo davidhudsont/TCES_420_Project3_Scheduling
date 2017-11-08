@@ -104,7 +104,8 @@ void * cpu_thread(void * arg) {
 		}
 	}
 	
-	printf("Times UP!!!, CPU: %d\n",(int)thread);
+	printf("CPU #: is exiting %d\n",(int)thread);
+	fprintf(fp,"CPU #: is exiting %d\n",(int)thread);
 	pthread_exit(0);
 }
 void* job_submission_thread(void* arg){
@@ -139,7 +140,8 @@ void* job_submission_thread(void* arg){
 		    t = wait(1);
 		}
 	}
-	printf("Times UP!!!, Submit: %d\n",(int)thread);
+	printf("Submission Thread #: is exiting %d\n",(int)thread);
+	fprintf(fp,"Submission Thread #: is exiting %d\n",(int)thread);
 	pthread_exit(0);
 }
 
@@ -149,8 +151,11 @@ void * io_thread(void * arg) {
 		if (!isEmpty(io_ptr)) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_io_lock);
-			job *io = dequeue(io_ptr);
-			if (io==NULL ) {
+			if (isEmpty(io_ptr)) {
+				job *io = dequeue(io_ptr);
+				sem_post(&sub_io_lock);
+			}
+			else {
 				sem_post(&sub_io_lock);
 				continue;
 			}
