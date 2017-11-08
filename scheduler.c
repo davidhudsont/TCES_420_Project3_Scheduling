@@ -257,7 +257,20 @@ int main() {
 	fp = freopen("output.txt","w",stdout);
 	fclose(fp);
 	/*
+	for (int i =0; i<run_ptr->qsize; i++) {
+		job *j = dequeue(run_ptr);
+		delete_job(j);
+	}
 	
+	for (int i =0; i<io_ptr->qsize; i++) {
+		job *j = dequeue(io_ptr);
+		delete_job(j);
+	}
+	
+	for (int i =0; i<done_ptr->qsize; i++) {
+		job *j = dequeue(done_ptr);
+		delete_job(j);
+	}
 	free(run_ptr->jobqueue);
 	free(io_ptr->jobqueue);
 	free(done_ptr->jobqueue);
