@@ -59,7 +59,7 @@ void * cpu_thread(void * arg) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_run_lock);
 			job* cpu = dequeue(run_ptr);
-			if (cpu->job_id < 0) {
+			if (cpu==NULL) {
 				sem_post(&sub_run_lock);
 				printf("Stuff Stuff\n");
 				continue;
@@ -138,7 +138,7 @@ void * io_thread(void * arg) {
 			//sem_wait(&sub_run);
 			sem_wait(&sub_io_lock);
 			job *io = dequeue(io_ptr);
-			if (io->job_id < 0) {
+			if (io==NULL) {
 				sem_post(&sub_io_lock);
 				continue;
 			}
