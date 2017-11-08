@@ -35,5 +35,6 @@ void delete_job(job *j) {
 	free(j->phases[0]);
 	free(j->phases[1]);
 	free(j->phases);
+	free(j);
 	
 }
