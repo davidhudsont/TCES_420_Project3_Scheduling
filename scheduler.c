@@ -260,7 +260,7 @@ int main() {
 	//FILE *fp;
 	//fp = freopen("output.txt","w",stdout);
 	//fclose(fp);
-	
+	/*
 	for (int i =0; i<run_ptr->qsize; i++) {
 		job *j = dequeue(run_ptr);
 		delete_job(j);
@@ -281,6 +281,6 @@ int main() {
 	free(run_ptr);
 	free(io_ptr);
 	free(done_ptr);
-	
+	*/
 	return 0;
 }
