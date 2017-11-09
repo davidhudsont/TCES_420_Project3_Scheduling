@@ -246,16 +246,17 @@ int main() {
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
 	/*
+	int sz = run_ptr->qsize;
 	for (int i =0; i<run_ptr->qsize; i++) {
 		job *j = dequeue(run_ptr);
 		delete_job(j);
 	}
-	
+	sz = io_ptr;
 	for (int i =0; i<io_ptr->qsize; i++) {
 		job *j = dequeue(io_ptr);
 		delete_job(j);
 	}
-	
+	sz = done_ptr->qsize;
 	for (int i =0; i<done_ptr->qsize; i++) {
 		job *j = dequeue(done_ptr);
 		delete_job(j);
