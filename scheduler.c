@@ -19,21 +19,15 @@ queue *io_ptr;
 queue *done_ptr;
 
 // Run Queue locks
-sem_t add_run;
 sem_t add_run_lock;
-sem_t sub_run;
 sem_t sub_run_lock;
 
 // IO Queue locks
-sem_t add_io;
 sem_t add_io_lock;
-sem_t sub_io;
 sem_t sub_io_lock;
 
 // Finished Queue locks
-sem_t add_finished;
 sem_t add_finished_lock;
-sem_t sub_finished;
 sem_t sub_finished_lock;
 
 sem_t counter_lock;
@@ -194,17 +188,11 @@ void * io_thread(void * arg) {
 
 int main() {
 	// Initialization of Queue Locks
-	sem_init(&add_run,0,qSIZE);
 	sem_init(&add_run_lock,0,1);
-	sem_init(&sub_run,0,qSIZE);
 	sem_init(&sub_run_lock,0,1);
-	sem_init(&add_io,0,qSIZE);
 	sem_init(&add_io_lock,0,1);
-	sem_init(&sub_io,0,qSIZE);
 	sem_init(&sub_io_lock,0,1);
-	sem_init(&add_finished,0,qSIZE);
 	sem_init(&add_finished_lock,0,1);
-	sem_init(&sub_finished,0,qSIZE);
 	sem_init(&sub_finished_lock,0,1);
 
 	// Memory Allocation and Initialization for Queues
@@ -257,9 +245,6 @@ int main() {
 	}
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
-	//FILE *fp;
-	//fp = freopen("output.txt","w",stdout);
-	//fclose(fp);
 	/*
 	for (int i =0; i<run_ptr->qsize; i++) {
 		job *j = dequeue(run_ptr);
