@@ -199,9 +199,9 @@ int main() {
 	run_ptr =(queue*) malloc(sizeof(queue));
 	io_ptr =(queue*) malloc(sizeof(queue));
 	done_ptr = (queue*)malloc(sizeof(queue));
-	queue_init(run_ptr,qSIZE);
-	queue_init(io_ptr,qSIZE);
-	queue_init(done_ptr,qSIZE);
+	queue_init(run_ptr);
+	queue_init(io_ptr);
+	queue_init(done_ptr);
 
 	srand(time(NULL));
 	stop = 0;
@@ -245,13 +245,13 @@ int main() {
 	}
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
-	/*
+	
 	int sz = run_ptr->qsize;
 	for (int i =0; i<run_ptr->qsize; i++) {
 		job *j = dequeue(run_ptr);
 		delete_job(j);
 	}
-	sz = io_ptr;
+	sz = io_ptr->qsize;
 	for (int i =0; i<io_ptr->qsize; i++) {
 		job *j = dequeue(io_ptr);
 		delete_job(j);
@@ -261,12 +261,12 @@ int main() {
 		job *j = dequeue(done_ptr);
 		delete_job(j);
 	}
-	free(run_ptr->jobqueue);
-	free(io_ptr->jobqueue);
-	free(done_ptr->jobqueue);
+	//free(run_ptr->jobqueue);
+	//free(io_ptr->jobqueue);
+	//free(done_ptr->jobqueue);
 	free(run_ptr);
 	free(io_ptr);
 	free(done_ptr);
-	*/
+	
 	return 0;
 }
