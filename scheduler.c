@@ -71,20 +71,22 @@ void * cpu_thread(void * arg) {
 			
 			sem_post(&sub_run_lock);
 			//sem_post(&sub_run);
-			sleep(cpu->phases[0][cpu->current_phase]);
-			printf("Job phase: %d complete, CPU #: %d\n", cpu->current_phase,(int)thread);
-			cpu->current_phase++;
+			//sleep(cpu->phases[0][cpu->current_phase]);
+			printf("Job: %d, phase: %d complete, CPU #: %d\n",cpu->job_id, cpu->current_phase,(int)thread);
+			//cpu->current_phase++;
 			if (cpu->current_phase == cpu->tasks) {
 				cpu->is_completed = 1;
 				//sem_wait(&add_finished);
 				sem_wait(&add_finished_lock);
-				printf("Adding job to Done Queue, CPU #: %d\n",(int)thread);
+				printf("Adding job: %d to Done Queue, CPU #: %d\n",cpu->job_id,(int)thread);
 				enqueue(done_ptr,cpu);
 				//sem_post(&add_finished);
 				sem_post(&add_finished_lock);
 			}
 			if (cpu->phases[1][cpu->current_phase] == 0) {
 				//sem_wait(&add_run);
+				sleep(cpu->phases[0][cpu->current_phase]);
+				cpu->current_phase++;
 				sem_wait(&add_run_lock);
 				printf("Adding job to Run Queue, CPU #: %d\n", (int)thread);
 				enqueue(run_ptr,cpu);
@@ -154,9 +156,9 @@ void * io_thread(void * arg) {
 			printf("Grabing a job for IO: %d\n",(int)thread);
 			sem_post(&sub_io_lock);
 			//sem_post(&sub_run);
-			sleep(io->phases[0][io->current_phase]);
+			//sleep(io->phases[0][io->current_phase]);
 			printf("Job phase: %d complete, IO #: %d\n", io->current_phase,(int)thread);
-			io->current_phase++;
+			//io->current_phase++;
 			if (io->current_phase == io->tasks) {
 				io->is_completed = 1;
 				//sem_wait(&add_finished);
@@ -176,6 +178,8 @@ void * io_thread(void * arg) {
 			}
 			if (io->phases[1][io->current_phase] == 1) {
 				//sem_wait(&add_io);
+				sleep(io->phases[0][io->current_phase]);
+				io->current_phase++;
 				sem_wait(&add_io_lock);
 				printf("Adding job to CPU Queue, IO #: %d\n",(int)thread);
 				enqueue(io_ptr,io);
@@ -253,10 +257,10 @@ int main() {
 	}
 	printf("# of Jobs: %d\n",counter-1);
 	printf("DONE!!!!!!!\n");
-	FILE *fp;
-	fp = freopen("output.txt","w",stdout);
-	fclose(fp);
-	/*
+	//FILE *fp;
+	//fp = freopen("output.txt","w",stdout);
+	//fclose(fp);
+	
 	for (int i =0; i<run_ptr->qsize; i++) {
 		job *j = dequeue(run_ptr);
 		delete_job(j);
@@ -277,6 +281,6 @@ int main() {
 	free(run_ptr);
 	free(io_ptr);
 	free(done_ptr);
-	*/
+	
 	return 0;
 }
