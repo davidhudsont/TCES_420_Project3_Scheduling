@@ -1,1 +1,339 @@
-
+Queueing new job, Submission Thread #: 0
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 2
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 0
+Job: 1, phase: 0 complete, CPU #: 0
+Grabing a job for CPU #: 1
+Job: 2, phase: 0 complete, CPU #: 1
+Grabing a job for CPU #: 2
+Job: 3, phase: 0 complete, CPU #: 2
+Grabing a job for CPU #: 3
+Job: 4, phase: 0 complete, CPU #: 3
+Queueing new job, Submission Thread #: 1
+Grabing a job for CPU #: 4
+Job: 5, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Grabing a job for IO: 0
+Job phase: 0 complete, IO #: 0
+Queueing new job, Submission Thread #: 2
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 6
+Job: 6, phase: 0 complete, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Grabing a job for CPU #: 6
+Job: 7, phase: 0 complete, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Grabing a job for IO: 3
+Job phase: 0 complete, IO #: 3
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 7
+Job: 8, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Grabing a job for IO: 2
+Job phase: 0 complete, IO #: 2
+Grabing a job for IO: 1
+Job phase: 0 complete, IO #: 1
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 1 complete, CPU #: 0
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 1 complete, CPU #: 1
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 1 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 1 complete, CPU #: 3
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 2 complete, CPU #: 0
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 2 complete, CPU #: 1
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 2 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 2 complete, CPU #: 3
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 5
+Job: 9, phase: 0 complete, CPU #: 5
+Adding job to IO Queue, CPU #: 5
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 4
+Job: 10, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 7
+Job: 11, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Grabing a job for CPU #: 7
+Job: 12, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 3 complete, CPU #: 0
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 3 complete, CPU #: 1
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 3 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 3 complete, CPU #: 3
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 6
+Job: 13, phase: 0 complete, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Queueing new job, Submission Thread #: 1
+Grabing a job for CPU #: 4
+Job: 14, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 4
+Job: 15, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 5
+Job: 16, phase: 0 complete, CPU #: 5
+Adding job to IO Queue, CPU #: 5
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 4 complete, CPU #: 0
+Adding job: 1 to Done Queue, CPU #: 0
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 5 complete, CPU #: 0
+Adding job to Run Queue, CPU #: 0
+Grabing a job for CPU #: 0
+Job: 1, phase: 6 complete, CPU #: 0
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 4 complete, CPU #: 1
+Adding job: 2 to Done Queue, CPU #: 1
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 5 complete, CPU #: 1
+Adding job to Run Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 2, phase: 6 complete, CPU #: 1
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 4 complete, CPU #: 2
+Adding job: 3 to Done Queue, CPU #: 2
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 5 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 3, phase: 6 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 4 complete, CPU #: 3
+Adding job: 4 to Done Queue, CPU #: 3
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 5 complete, CPU #: 3
+Adding job to Run Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 4, phase: 6 complete, CPU #: 3
+Queueing new job, Submission Thread #: 0
+Removing finished job, Submit: 0
+Grabing a job for CPU #: 6
+Job: 17, phase: 0 complete, CPU #: 6
+Queueing new job, Submission Thread #: 1
+Removing finished job, Submit: 1
+Grabing a job for CPU #: 0
+Job: 18, phase: 0 complete, CPU #: 0
+Queueing new job, Submission Thread #: 2
+Removing finished job, Submit: 2
+Queueing new job, Submission Thread #: 3
+Removing finished job, Submit: 3
+Grabing a job for CPU #: 3
+Job: 19, phase: 0 complete, CPU #: 3
+Grabing a job for CPU #: 7
+Job: 20, phase: 0 complete, CPU #: 7
+Adding job to CPU Queue, IO #: 0
+Grabing a job for IO: 0
+Job phase: 0 complete, IO #: 0
+Adding job to CPU Queue, IO #: 3
+Grabing a job for IO: 3
+Job phase: 0 complete, IO #: 3
+Adding job to CPU Queue, IO #: 2
+Grabing a job for IO: 2
+Job phase: 0 complete, IO #: 2
+Adding job to CPU Queue, IO #: 1
+Grabing a job for IO: 1
+Job phase: 0 complete, IO #: 1
+Adding job to Run Queue, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Grabing a job for CPU #: 6
+Job: 17, phase: 1 complete, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Adding job to Run Queue, CPU #: 0
+Adding job to IO Queue, CPU #: 0
+Grabing a job for CPU #: 6
+Job: 18, phase: 1 complete, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+Adding job to Run Queue, CPU #: 3
+Adding job to IO Queue, CPU #: 3
+Grabing a job for CPU #: 3
+Job: 19, phase: 1 complete, CPU #: 3
+Adding job to IO Queue, CPU #: 3
+Adding job to Run Queue, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Grabing a job for CPU #: 7
+Job: 20, phase: 1 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 0
+Job: 21, phase: 0 complete, CPU #: 0
+Adding job to IO Queue, CPU #: 0
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 3
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 2
+Job: 22, phase: 0 complete, CPU #: 2
+Adding job to IO Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 23, phase: 0 complete, CPU #: 2
+Adding job to IO Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 24, phase: 0 complete, CPU #: 2
+Adding job to IO Queue, CPU #: 2
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 7
+Job: 25, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 4
+Job: 26, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 7
+Job: 27, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Grabing a job for CPU #: 7
+Job: 28, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Queueing new job, Submission Thread #: 1
+Grabing a job for CPU #: 1
+Job: 29, phase: 0 complete, CPU #: 1
+Adding job to IO Queue, CPU #: 1
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 2
+Job: 30, phase: 0 complete, CPU #: 2
+Adding job to IO Queue, CPU #: 2
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 7
+Job: 31, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 7
+Job: 32, phase: 0 complete, CPU #: 7
+Adding job to IO Queue, CPU #: 7
+Adding job to CPU Queue, IO #: 0
+Grabing a job for IO: 0
+Job phase: 0 complete, IO #: 0
+Adding job to CPU Queue, IO #: 3
+Grabing a job for IO: 3
+Job phase: 0 complete, IO #: 3
+Adding job to CPU Queue, IO #: 2
+Grabing a job for IO: 2
+Job phase: 0 complete, IO #: 2
+Adding job to CPU Queue, IO #: 1
+Grabing a job for IO: 1
+Job phase: 0 complete, IO #: 1
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 5
+Job: 33, phase: 0 complete, CPU #: 5
+Adding job to IO Queue, CPU #: 5
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 4
+Job: 34, phase: 0 complete, CPU #: 4
+Adding job to IO Queue, CPU #: 4
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 1
+Job: 35, phase: 0 complete, CPU #: 1
+Adding job to IO Queue, CPU #: 1
+Grabing a job for CPU #: 1
+Job: 36, phase: 0 complete, CPU #: 1
+Adding job to IO Queue, CPU #: 1
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 4
+Job: 37, phase: 0 complete, CPU #: 4
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 7
+Job: 38, phase: 0 complete, CPU #: 7
+Queueing new job, Submission Thread #: 1
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 2
+Job: 39, phase: 0 complete, CPU #: 2
+Grabing a job for CPU #: 5
+Job: 40, phase: 0 complete, CPU #: 5
+Adding job to Run Queue, CPU #: 4
+Grabing a job for CPU #: 4
+Job: 37, phase: 1 complete, CPU #: 4
+Adding job to Run Queue, CPU #: 7
+Grabing a job for CPU #: 7
+Job: 38, phase: 1 complete, CPU #: 7
+Adding job to Run Queue, CPU #: 2
+Grabing a job for CPU #: 2
+Job: 39, phase: 1 complete, CPU #: 2
+Adding job to Run Queue, CPU #: 5
+Grabing a job for CPU #: 5
+Job: 40, phase: 1 complete, CPU #: 5
+Queueing new job, Submission Thread #: 0
+Grabing a job for CPU #: 6
+Job: 41, phase: 0 complete, CPU #: 6
+Queueing new job, Submission Thread #: 3
+Grabing a job for CPU #: 0
+Job: 42, phase: 0 complete, CPU #: 0
+Queueing new job, Submission Thread #: 1
+Grabing a job for CPU #: 1
+Job: 43, phase: 0 complete, CPU #: 1
+Queueing new job, Submission Thread #: 2
+Grabing a job for CPU #: 3
+Job: 44, phase: 0 complete, CPU #: 3
+Times UP!!!
+Adding job to CPU Queue, IO #: 0
+IO #: is exiting 0
+Adding job to CPU Queue, IO #: 3
+IO #: is exiting 3
+Adding job to Run Queue, CPU #: 4
+CPU #: is exiting 4
+Adding job to Run Queue, CPU #: 7
+CPU #: is exiting 7
+Adding job to Run Queue, CPU #: 2
+CPU #: is exiting 2
+Adding job to Run Queue, CPU #: 5
+CPU #: is exiting 5
+Adding job to CPU Queue, IO #: 2
+IO #: is exiting 2
+Adding job to CPU Queue, IO #: 1
+IO #: is exiting 1
+Submission Thread #: is exiting 2
+Submission Thread #: is exiting 3
+Submission Thread #: is exiting 0
+Submission Thread #: is exiting 1
+Adding job to Run Queue, CPU #: 6
+Adding job to IO Queue, CPU #: 6
+CPU #: is exiting 6
+Adding job to Run Queue, CPU #: 0
+Adding job to IO Queue, CPU #: 0
+CPU #: is exiting 0
+Adding job to Run Queue, CPU #: 1
+Adding job to IO Queue, CPU #: 1
+CPU #: is exiting 1
+Adding job to Run Queue, CPU #: 3
+Adding job to IO Queue, CPU #: 3
+CPU #: is exiting 3
+# of Jobs: 44
+DONE!!!!!!!
