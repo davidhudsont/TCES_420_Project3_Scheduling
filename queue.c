@@ -10,43 +10,38 @@ int isEmpty(queue *q){
 
 
 void queue_init(queue *q) {
-	//q->head = (node*)malloc(sizeof(node));
-	//q->head->next = NULL;
-	//q->head->j = NULL;
-	//q->head = NULL;
+	//q->head = (node*)malloc(sizeof(node)); 
 	q->qsize = 0;
-	
 }
 
 void queue_delete(queue *q) {
-	
 	free(q);
 }
 void enqueue(queue *q,job *a) {
+    node *temp = (node*)malloc(sizeof(node));
+    temp->j = a;
+    temp->next = NULL;
 	if (q->qsize==0){
-		q->head = (node*)malloc(sizeof(node));
-		q->head->j = a;
-		q->qsize++;
-		q->tail = q->head;
-	}
-	else {
-		node *temp = (node*)malloc(sizeof(node));
-		q->tail->next = temp;
-		temp->j = a;
+		q->head = temp;
 		q->tail = temp;
 	}
+	else {
+		q->tail->next = temp;
+		q->tail = temp;
+	}
+    q->qsize++;
 }
 
 job* dequeue(queue *q) {
 	if (isEmpty(q)) {
 		return NULL;
 	}
-	else {
-	node* js = q->head;
-	q->head = q->head->next;
-	q->qsize--;
-	free(&js->next);
-	return js->j;
-	}
+    job* js = q->head->j;
+    node* temp = q->head;
+    temp->j = NULL;
+    q->head = q->head->next;
+    q->qsize--;
+    free(temp);
+    return js;
 }
 
