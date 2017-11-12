@@ -2,16 +2,12 @@
 #include <stdio.h>
 //#define _POSIX_C_SOURCE >= 199309L
 #include <time.h>
-#include <queue.h>
 #include <assert.h>
 #include <pthread.h>
 #include <unistd.h>
 #include <semaphore.h>
 #include <stdint.h>
-
-// Queue and Job size
-#define qSIZE 100
-#define jSIZE 16
+#include "queue.h"
 
 // Global Queue pointers
 queue *run_ptr;
@@ -68,7 +64,6 @@ void* job_submission_thread(void* arg){
 			job *ja= dequeue(done_ptr);
 			delete_job(ja);
                 	free(ja);
-			//free(j);
 			sem_post(&finished_lock);
 		    }
 		    t = wait(2);
@@ -93,9 +88,7 @@ void * cpu_thread(void * arg) {
             		sem_post(&ready_lock);
 			printf("Grabing a job for CPU #: %d\n",thread);
 			//sem_post(&sub_run);
-			//sleep(cpu->phases[0][cpu->current_phase]);
 			printf("Job: %d, phase: %d complete, CPU #: %d\n",cpu->job_id, cpu->current_phase,thread);
-			//cpu->current_phase++;
 			if (cpu->current_phase == cpu->tasks) {
 				cpu->is_completed = 1;
 				//sem_wait(&add_finished);
@@ -146,9 +139,7 @@ void * io_thread(void * arg) {
 			printf("Grabing a job for IO: %d\n", thread);
 			sem_post(&io_lock);
 			//sem_post(&sub_run);
-			//sleep(io->phases[0][io->current_phase]);
 			printf("Job phase: %d complete, IO #: %d\n", io->current_phase, thread);
-			//io->current_phase++;
 			if (io->current_phase == io->tasks) {
 				io->is_completed = 1;
 				//sem_wait(&add_finished);
@@ -199,6 +190,7 @@ int main() {
 	stop = 0;
 	// global counter lock init
 	sem_init(&counter_lock,0,1);
+	
 	// Job submission thread initialization
 	pthread_t* job_submission = malloc(4*sizeof(pthread_t));
 	for(int i = 0 ; i < 4; i++){
@@ -256,9 +248,6 @@ int main() {
 		delete_job(j);
         	free(j);
 	}
-	//free(run_ptr->jobqueue);
-	//free(io_ptr->jobqueue);
-	//free(done_ptr->jobqueue);
 	free(run_ptr);
 	free(io_ptr);
 	free(done_ptr);
