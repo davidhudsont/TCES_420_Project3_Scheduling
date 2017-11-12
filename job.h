@@ -1,5 +1,3 @@
-
-
 #include <stdio.h>
 
 #ifndef LIST_J_
