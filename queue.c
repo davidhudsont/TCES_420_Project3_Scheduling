@@ -1,7 +1,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <queue.h>
+#include "queue.h"
 
 int isEmpty(queue *q){ return (q->qsize ==0);	}	    
 
