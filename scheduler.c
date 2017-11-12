@@ -79,7 +79,6 @@ void * cpu_thread(void * arg) {
    	free(arg);
 	while (stop!=1) {
 		if (!isEmpty(run_ptr)) {
-			//sem_wait(&sub_run);
 			sem_wait(&ready_lock);
        			if (isEmpty(run_ptr)) {
                			sem_post(&ready_lock);
@@ -88,34 +87,27 @@ void * cpu_thread(void * arg) {
 			job* cpu = dequeue(run_ptr);
             		sem_post(&ready_lock);
 			printf("Grabing a job for CPU #: %d\n",thread);
-			//sem_post(&sub_run);
 			printf("Job: %d, phase: %d complete, CPU #: %d\n",cpu->job_id, cpu->current_phase,thread);
 			if (cpu->current_phase == cpu->tasks) {
 				cpu->is_completed = 1;
-				//sem_wait(&add_finished);
 				sem_wait(&finished_lock);
 				printf("Adding job: %d to Done Queue, CPU #: %d\n",cpu->job_id,thread);
 				enqueue(done_ptr,cpu);
-				//sem_post(&add_finished);
 				sem_post(&finished_lock);
 			}
 			else if (cpu->phases[1][cpu->current_phase] == 0) {
-				//sem_wait(&add_run);
 				sleep(cpu->phases[0][cpu->current_phase]);
 				cpu->current_phase++;
 				sem_wait(&ready_lock);
 				printf("Adding job to Run Queue, CPU #: %d\n", thread);
 				enqueue(run_ptr,cpu);
 				sem_post(&ready_lock);
-				//sem_post(&add_run);
 			}
 			else {
-				//sem_wait(&add_io);
 				sem_wait(&io_lock);
 				printf("Adding job to IO Queue, CPU #: %d\n",thread);
 				enqueue(io_ptr,cpu);
 				sem_post(&io_lock);
-				//sem_post(&add_io);
 			}
 			
 		}
@@ -130,7 +122,6 @@ void * io_thread(void * arg) {
     	free(arg);
 	while (stop!=1) {
 		if (!isEmpty(io_ptr)) {
-			//sem_wait(&sub_run);
 			sem_wait(&io_lock);
        			if (!isEmpty(io_ptr)) {
                 		sem_post(&io_lock);
@@ -139,33 +130,26 @@ void * io_thread(void * arg) {
 			job *io = dequeue(io_ptr);
 			printf("Grabing a job for IO: %d\n", thread);
 			sem_post(&io_lock);
-			//sem_post(&sub_run);
 			printf("Job phase: %d complete, IO #: %d\n", io->current_phase, thread);
 			if (io->current_phase == io->tasks) {
 				io->is_completed = 1;
-				//sem_wait(&add_finished);
 				sem_wait(&finished_lock);
 				printf("Adding job to Done Queue, IO: %d\n", thread);
 				enqueue(done_ptr,io);
-				//sem_post(&add_finished);
 				sem_post(&finished_lock);
 			}else if (io->phases[1][io->current_phase] == 0) {
-				//sem_wait(&add_run);
 				sem_wait(&ready_lock);
 				printf("Adding job to Run Queue, IO #: %d\n", thread);
 				enqueue(run_ptr,io);
 				sem_post(&ready_lock);
-				//sem_post(&add_run);
 			}
 			else {
-				//sem_wait(&add_io);
 				sleep(io->phases[0][io->current_phase]);
 				io->current_phase++;
 				sem_wait(&io_lock);
 				printf("Adding job to IO Queue, IO #: %d\n",thread);
 				enqueue(io_ptr,io);
 				sem_post(&io_lock);
-				//sem_post(&add_io);
 			}	
 		}
 	}
