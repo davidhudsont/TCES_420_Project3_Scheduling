@@ -19,12 +19,12 @@ typedef struct Queue {
  
 int isEmpty(queue *q);
 
-int isFull(queue *q);
- 
 void enqueue(queue *q,job *j);
  
 job *dequeue(queue *q);
 
 void queue_init(queue *q);
+
 void queue_delete(queue *q);
+
 #endif 
