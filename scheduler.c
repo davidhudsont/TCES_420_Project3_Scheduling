@@ -251,7 +251,7 @@ int main() {
 		job *j = dequeue(run_ptr);
 		delete_job(j);
 	}
-	sz = io_ptr;
+	sz = io_ptr->qsize;
 	for (int i =0; i<io_ptr->qsize; i++) {
 		job *j = dequeue(io_ptr);
 		delete_job(j);
