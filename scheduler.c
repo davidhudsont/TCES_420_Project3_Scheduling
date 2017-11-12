@@ -58,6 +58,7 @@ void* job_submission_thread(void* arg){
 		    if(!isEmpty(done_ptr)){
                		sem_wait(&finished_lock);
                 	if(isEmpty(done_ptr)){
+				sem_post(&finished_lock);
                     		continue;
                 	}
 			printf("Removing finished job, Submit: %d\n", thread);
