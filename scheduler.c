@@ -56,7 +56,7 @@ void * cpu_thread(void * arg) {
 				continue;
 			}
 			printf("Grabing a job for CPU #: %d\n",(int)thread);
-			sem_post(&sub_run_lock);
+			sem_post(&run_lock);
 			//sem_post(&sub_run);
 			//sleep(cpu->phases[0][cpu->current_phase]);
 			printf("Job: %d, phase: %d complete, CPU #: %d\n",cpu->job_id, cpu->current_phase,(int)thread);
