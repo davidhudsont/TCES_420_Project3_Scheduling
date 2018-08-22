@@ -1,43 +1,52 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <queue.h>
+#include "queue.h"
 
+int isEmpty(queue *q){ return (q->qsize ==0);	}	    
 
-int isEmpty(queue *q){
-	return (q->qsize ==0);	
-}	    
-
-int isFull(queue *q){
-	return (q->qsize ==q->qcapacity);	
+queue* queue_init() { 
+	queue *q = (queue*) malloc(sizeof(queue));
+	q->qsize = 0; 
+	q->head = NULL;
+	q->tail = NULL;
+	q->enqueue = insert;
+	q->destroy = queue_delete;
+	q->dequeue = removejob;
+	return q;
 }
 
-void queue_init(queue *q,int capacity) {
-	q->jobqueue = (job**)malloc(capacity*sizeof(job*));
-	q->qcapacity = capacity;
-	q->head = 0;
-	q->tail = capacity-1;
-	q->qsize = 0;
+void queue_delete(queue *q) { 
+	while (q->qsize > 0) {
+		job *tmp = q->dequeue(q);
+		tmp->destroy(tmp);
+	}
+	// printf("Free\n");
+	free(q); 
 }
 
-void queue_delete(queue *q) {
-	free(q->jobqueue);
-	free(q);
-}
-void enqueue(queue *q,job *j) {
-	if (isFull(q)) { return; } 
-	q->tail = (q->tail + 1)%q->qcapacity;
-	q->jobqueue[q->tail] = j;
-	q->qsize++;
+void insert(queue *q,job *j) {
+	if (q->qsize==0){
+		q->head = init_node(j);
+		q->tail = q->head;
+	}
+	else {
+		node *temp = init_node(j);
+		q->tail->next = temp;
+		q->tail = temp;
+	}
+    	q->qsize++;
 }
 
-job* dequeue(queue *q) {
+job* removejob(queue *q) {
 	if (isEmpty(q)) {
 		return NULL;
 	}
-	job* ret= q->jobqueue[q->head];
-	q->head = (q->head+1)%q->qcapacity;
-	q->qsize--;
-	return ret;
+    	job* j;
+    	node *tmp = q->head;
+    	q->head = q->head->next;
+    	j = tmp->destroy(tmp);
+    	q->qsize--;
+    	return j;
 }
 
