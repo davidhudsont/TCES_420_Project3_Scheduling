@@ -6,18 +6,18 @@
 #include <unistd.h>
 
 
-job* init_job(int id) {
+job* create_job(int id) {
 	srand(time(NULL));
 	job *j = (job*) malloc(sizeof(job));
 	j->is_completed = 0;
-	j->current_task = 0;
+	j->task_counter = 0;
 	j->job_id = id;
 	j->tasks = rand()%3+1;
 	j->task_type = rand()%2;
 	if (j->task_type == 1) 
-		j->task = rand()%3+2;
+		j->current_task = rand()%3+2;
 	else if (j->task_type == 0) 
-		j->task = rand()%2;
+		j->current_task = rand()%2;
 
 
 	j->destroy = delete_job;
@@ -34,21 +34,21 @@ void delete_job(job *j) {
 }
 
 void next_task(job *j) {
-	j->current_task++;
-	if (j->current_task == j->tasks)
+	j->task_counter++;
+	if (j->task_counter == j->tasks)
 		j->is_completed = 1;
 	else {
 		j->task_type = rand()%2;
 		if (j->task_type == 1) 
-			j->task = rand()%4+7;
+			j->current_task = rand()%4+7;
 		else if (j->task_type == 0) 
-			j->task = rand()%4+1;
+			j->current_task = rand()%4+1;
 	}
 }
 
 void complete_task(job *j) {
-	if (j->current_task < j->tasks)
-		sleep(j->task);
+	if (j->task_counter < j->tasks)
+		sleep(j->current_task);
 	else 
 		printf("Job is Finished!\n");
 }
@@ -56,5 +56,8 @@ void complete_task(job *j) {
 
 void print_job(job *j) {
 	printf("Job ID: %d, Current Task: %d Job Complete: %d #ofTasks: %d\n",
-		j->job_id,j->current_task,j->is_completed,j->tasks);
+		j->job_id,j->task_counter,j->is_completed,j->tasks);
 }
+
+
+

@@ -53,30 +53,27 @@ void* job_submission_thread(void* arg){
 	int t;
 	while(stop!=1){
 		// Producer
-		
-    	sem_wait(&counter_lock);
-		job *j = init_job(counter);
-    	counter++;
+    sem_wait(&counter_lock);
+		job *j = create_job(counter);
+    counter++;
 		sem_post(&counter_lock);
-
 		// sem_wait(&ready_empty);
 		sem_wait(&ready_lock);
 		printf("Job: %d queued, Submission Thread #: %d\n",j->job_id, thread);
 		run_ptr->enqueue(run_ptr,j);
 		sem_post(&ready_lock);
 		// sem_post(&ready_full);
-
-        t =0;
-        // Consumer
+		// Consumer
+		t = 0;
 		while (t!=1){
 		    if(!isEmpty(done_ptr)){
-		    	// sem_wait(&finished_full);
-           		sem_wait(&finished_lock);
-            	if (isEmpty(done_ptr)){
-					sem_post(&finished_lock);
-					// sem_post(&finished_empty);
-            		continue;
-            	}
+					// sem_wait(&finished_full);
+					sem_wait(&finished_lock);
+					if (isEmpty(done_ptr)){
+						sem_post(&finished_lock);
+						// sem_post(&finished_empty);
+						continue;
+				}
 				job *ja= done_ptr->dequeue(done_ptr);
 				printf("Job: %d Complete!, Submission Thread #: %d\n",ja->job_id, thread);
 				ja->destroy(ja);
@@ -99,20 +96,19 @@ void * cpu_thread(void * arg) {
 			// Consumer
 			// sem_wait(&ready_full);
 			sem_wait(&ready_lock);
-   			if (isEmpty(run_ptr)) {
-           			sem_post(&ready_lock);
-           			// sem_post(&ready_empty);
-            		continue;
-      		}
+			if (isEmpty(run_ptr)) {
+				sem_post(&ready_lock);
+				// sem_post(&ready_empty);
+				continue;
+			}
 			job *cpu = run_ptr->dequeue(run_ptr);
-    		sem_post(&ready_lock);
-    		// sem_post(&ready_empty);
-
-    		if (cpu->task_type == 0) {
-    			cpu->complete(cpu);
+			sem_post(&ready_lock);
+			// sem_post(&ready_empty);
+			if (cpu->task_type == 0) {
+				cpu->complete(cpu);
 				cpu->next(cpu);
-    		}
-    		// Producer
+			}
+			// Producer
 			if (cpu->is_completed == 1) {
 				// sem_wait(&finished_empty);
 				sem_wait(&finished_lock);
@@ -137,27 +133,25 @@ void * cpu_thread(void * arg) {
 				sem_post(&io_lock);
 				// sem_post(&io_full);
 			}
-			
 		}
 	}
-	
 	printf("CPU Thread #: is exiting %d\n",thread);
 	pthread_exit(0);
 }
 
-void * io_thread(void * arg) { 
+void * io_thread(void* arg) { 
 	int thread = *((int*)arg);
-    	free(arg);
+	free(arg);
 	while (stop!=1) {
 		if (!isEmpty(io_ptr)) {
 			// Consumer
 			// sem_wait(&io_full);
 			sem_wait(&io_lock);
-   			if (!isEmpty(io_ptr)) {
-            		sem_post(&io_lock);
-            		// sem_post(&io_empty);
-            		continue;
-       	 	}
+			if (!isEmpty(io_ptr)) {
+				sem_post(&io_lock);
+				// sem_post(&io_empty);
+				continue;
+			}
 			job *io = io_ptr->dequeue(io_ptr);
 			sem_post(&io_lock);
 			// sem_post(&io_empty);
@@ -182,7 +176,6 @@ void * io_thread(void * arg) {
 				sem_post(&ready_lock);
 				// sem_post(&ready_full);
 			}
-
 			else {
 				// sem_wait(&io_empty);
 				sem_wait(&io_lock);
@@ -237,8 +230,8 @@ int main(int argc, char *argv[]) {
 	// Job submission thread initialization
 	pthread_t* job_submission = malloc(4*sizeof(pthread_t));
 	for(int i = 0 ; i < 4; i++){
-        	int *arg = malloc(sizeof(*arg));
-        	*arg = i;
+		int *arg = malloc(sizeof(*arg));
+		*arg = i;
 		int rc = pthread_create(&job_submission[i], NULL,job_submission_thread,arg);
 		assert(rc == 0);
 	}
@@ -262,6 +255,7 @@ int main(int argc, char *argv[]) {
 	stop = 1;
 		
 	//printf("Times UP!!!\n");
+	// Join all threads
 	for (int i=0; i<4; i++) {
 		int rc = pthread_join(job_submission[i],NULL);
 		assert(rc==0);
@@ -283,15 +277,15 @@ int main(int argc, char *argv[]) {
 	sem_destroy(&ready_lock);
 	sem_destroy(&io_lock);
 	sem_destroy(&finished_lock);
-    sem_destroy(&counter_lock);
-    sem_destroy(&ready_empty);
-    sem_destroy(&ready_full);
-    sem_destroy(&io_empty);
-    sem_destroy(&io_full);
-    sem_destroy(&finished_full);
-    sem_destroy(&finished_empty);
+	sem_destroy(&counter_lock);
+	sem_destroy(&ready_empty);
+	sem_destroy(&ready_full);
+	sem_destroy(&io_empty);
+	sem_destroy(&io_full);
+	sem_destroy(&finished_full);
+	sem_destroy(&finished_empty);
 
-    free(job_submission);
+	free(job_submission);
 	free(cpu);
 	free(io);
 
