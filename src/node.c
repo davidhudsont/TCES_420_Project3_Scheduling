@@ -17,7 +17,6 @@ job* node_destroy(node *n) {
 	job *j = n->j;
 	n->j = NULL;
 	n->next = NULL;
-	// printf("Free\n");
 	free(n);
 	return j;
 }

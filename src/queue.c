@@ -3,10 +3,12 @@
 #include <stdio.h>
 #include "queue.h"
 
-int isEmpty(queue *q){ return (q->qsize ==0);	}	    
+int isEmpty(queue* q) { 
+	return (q->qsize ==0);	
+}	    
 
 queue* queue_init() { 
-	queue *q = (queue*) malloc(sizeof(queue));
+	queue* q = (queue*) malloc(sizeof(queue));
 	q->qsize = 0; 
 	q->head = NULL;
 	q->tail = NULL;
@@ -18,10 +20,9 @@ queue* queue_init() {
 
 void queue_delete(queue *q) { 
 	while (q->qsize > 0) {
-		job *tmp = q->dequeue(q);
+		job* tmp = q->dequeue(q);
 		tmp->destroy(tmp);
 	}
-	// printf("Free\n");
 	free(q); 
 }
 
@@ -35,18 +36,18 @@ void insert(queue *q,job *j) {
 		q->tail->next = temp;
 		q->tail = temp;
 	}
-    	q->qsize++;
+	q->qsize++;
 }
 
 job* removejob(queue *q) {
 	if (isEmpty(q)) {
 		return NULL;
 	}
-    	job* j;
-    	node *tmp = q->head;
-    	q->head = q->head->next;
-    	j = tmp->destroy(tmp);
-    	q->qsize--;
-    	return j;
+	job* j;
+	node* tmp = q->head;
+	q->head = q->head->next;
+	j = tmp->destroy(tmp);
+	q->qsize--;
+	return j;
 }
 
