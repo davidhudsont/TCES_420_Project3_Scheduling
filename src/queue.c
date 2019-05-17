@@ -3,51 +3,58 @@
 #include <stdio.h>
 #include "queue.h"
 
-int isEmpty(queue* q) { 
+int isEmpty(QUEUE* q) { 
 	return (q->qsize ==0);	
 }	    
 
-queue* queue_init() { 
-	queue* q = (queue*) malloc(sizeof(queue));
+QUEUE* queue_init() { 
+	QUEUE* q = (QUEUE*) malloc(sizeof(QUEUE));
 	q->qsize = 0; 
 	q->head = NULL;
 	q->tail = NULL;
-	q->enqueue = insert;
-	q->destroy = queue_delete;
-	q->dequeue = removejob;
 	return q;
 }
 
-void queue_delete(queue *q) { 
-	while (q->qsize > 0) {
-		job* tmp = q->dequeue(q);
-		tmp->destroy(tmp);
+JOB* dequeue_job(QUEUE* q) 
+{
+	if (isEmpty(q)) {
+		return NULL;
+	}
+	JOB* j;
+	NODE* tmp = q->head;
+	q->head = q->head->next;
+	j = node_destroy(tmp);
+	q->qsize--;
+	return j;
+}
+
+void queue_delete(QUEUE* q) { 
+	while (q->qsize > 0) 
+	{
+		JOB* tmp = dequeue_job(q);
+		delete_job(tmp);
 	}
 	free(q); 
 }
 
-void insert(queue *q,job *j) {
-	if (q->qsize==0){
+void enqueue_job(QUEUE* q,JOB* j) {
+	if (q->qsize==0)
+	{
 		q->head = init_node(j);
 		q->tail = q->head;
 	}
-	else {
-		node *temp = init_node(j);
+	else 
+	{
+		NODE *temp = init_node(j);
 		q->tail->next = temp;
 		q->tail = temp;
 	}
 	q->qsize++;
 }
 
-job* removejob(queue *q) {
-	if (isEmpty(q)) {
-		return NULL;
+void print_queue(QUEUE* q) {
+	NODE* current = q->head;
+	while (current != NULL) {
+		printf("");
 	}
-	job* j;
-	node* tmp = q->head;
-	q->head = q->head->next;
-	j = tmp->destroy(tmp);
-	q->qsize--;
-	return j;
 }
-

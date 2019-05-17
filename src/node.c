@@ -2,20 +2,16 @@
 #include <stdio.h>
 #include "node.h"
 
-
-
-node* init_node(job *j) {
-	node *n = (node*)malloc(sizeof(node));
+NODE* init_node(JOB *j) {
+	NODE *n = (NODE*)malloc(sizeof(NODE));
 	n->j = j;
-	n->next= NULL;
-	n->destroy = node_destroy;
+	n->next = NULL;
 	return n;
 }
 
-
-job* node_destroy(node *n) {
-	job *j = n->j;
-	n->j = NULL;
+JOB* node_destroy(NODE *n) {
+	JOB *j 	= n->j;
+	n->j 	= NULL;
 	n->next = NULL;
 	free(n);
 	return j;

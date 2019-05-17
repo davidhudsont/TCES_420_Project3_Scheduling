@@ -1,10 +1,15 @@
 #include <stdio.h>
-#include "threads.h"
+#include "scheduler_threads.h"
 
 int main(int argc, char *argv[]) {
 
 	int runtime = 15;
-	if (argc == 2) {
+	bool close_console;
+	if (argc == 3)
+		close_console = atoi(argv[2]);
+	if (argc == 2) 
+	{
+		close_console = 0;
 		runtime = atoi(argv[1]);
 		printf("Run time %d\n", runtime);
 	}
@@ -12,6 +17,7 @@ int main(int argc, char *argv[]) {
 	schedule_init();
 	
 	// Job submission thread initialization
+	srand(time(0));
 	schedule_thread_start();
 	
 	wait(runtime);
@@ -28,8 +34,12 @@ int main(int argc, char *argv[]) {
 	printf("DONE!!!!!!!\n");
 	
 	schedule_destroy();
-  printf("Press Enter to Close the Program");
-	char x;
-	scanf("%c",&x);
+
+	if (close_console)
+	{
+		printf("Press Enter to Close the Program");
+		char x;
+		scanf("%c",&x);
+	}
 	return 0;
 }

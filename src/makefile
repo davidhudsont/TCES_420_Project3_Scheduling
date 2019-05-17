@@ -9,7 +9,7 @@ LIBS = -lpthread
 _DEPS = threads.h queue.h node.h job.h
 DEPS = $(patsubst %, $(ODIR)/%, $(_OBJ))
 
-_OBJ = scheduler.o threads.o queue.o node.o job.o
+_OBJ = scheduler.o scheduler_threads.o queue.o node.o job.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 

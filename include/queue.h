@@ -3,27 +3,26 @@
 #include "job.h"
 #include "node.h"
 
-#ifndef LIST_H_   /* Include guard */
-#define LIST_H_
+#ifndef __QUEUE__H__   /* Include guard */
+#define __QUEUE__H__
 
-typedef struct Queue {
- 	int qsize;		//4 bytes
- 	node* head; 	//8 bytes
-	node* tail;		//8 bytes
+typedef struct queue {
+ 	int qsize;		//Current Size of the queue
+ 	NODE* head; 	//Head of the queue
+	NODE* tail;		//Tail of the queue
 
-	void (*enqueue) (struct Queue*, struct Job*); 	//8 bytes
-	void (*destroy) (struct Queue*);				//8 bytes
-	job* (*dequeue) (struct Queue*);				//8 bytes
- }queue;
+ } QUEUE;
  
-int isEmpty(queue *q);
+int isEmpty(QUEUE* q);
 
-void insert(queue *q,job *j);
+void enqueue_job(QUEUE* q, JOB* j);
  
-job *removejob(queue *q);
+JOB *dequeue_job(QUEUE* q);
 
-queue* queue_init();
+QUEUE* queue_init();
 
-void queue_delete(queue *q);
+void queue_delete(QUEUE* q);
+
+void print_queue(QUEUE* q);
 
 #endif 

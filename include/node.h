@@ -2,19 +2,15 @@
 #include <stdlib.h>
 #include "job.h"
 
-#ifndef LIST_N_   /* Include guard */
-#define LIST_N_
+#ifndef __NODE_H__   
+#define __NODE_H__
 
-typedef struct Node {
-	job* j;
-	struct Node* next;
+typedef struct node {
+	JOB* j;
+	struct node* next;
+} NODE;
 
-	job* (*destroy) (struct Node*);
-
-}node;
-
-node* init_node(job *j);
-job* node_destroy(node *n);
-
+NODE* init_node(JOB *j);
+JOB* node_destroy(NODE *n);
 
 #endif

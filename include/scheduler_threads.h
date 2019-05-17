@@ -1,6 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
-//#define _POSIX_C_SOURCE >= 199309L
+#include <stdlib.h>
 #include <time.h>
 #include <assert.h>
 #include <pthread.h>
@@ -9,14 +8,14 @@
 #include <stdint.h>
 #include "queue.h"
 
-#ifndef __THREADS_H__
-#define __THREADS_H__
+#ifndef __SCHEDULER_THREADS_H__
+#define __SCHEDULER_THREADS_H__
 
 
 // Global Queue pointers
-queue *run_ptr;
-queue *io_ptr;
-queue *done_ptr;
+QUEUE *run_ptr;
+QUEUE *io_ptr;
+QUEUE *done_ptr;
 
 // Run Queue locks
 sem_t ready_full;
@@ -36,11 +35,11 @@ sem_t finished_lock;
 sem_t counter_lock;
 sem_t job_counter_lock;
 
-// Job Bookkeeping
+// Job Book keeping
 unsigned int counter;
 unsigned int job_counter;
 
-
+// Stops scheduler
 int stop;
 
 // Threads
@@ -61,9 +60,9 @@ void schedule_destroy(void);
 
 void* job_submission_thread(void* arg);
 
-void * cpu_thread(void * arg);
+void* cpu_thread(void * arg);
 
-void * io_thread(void* arg);
+void* io_thread(void* arg);
 
 
 #endif
