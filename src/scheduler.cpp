@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include "scheduler_threads.h"
 
 int main(int argc, char *argv[])
@@ -14,8 +16,6 @@ int main(int argc, char *argv[])
         runtime = atoi(argv[1]);
         printf("Run time %d\n", runtime);
     }
-
-    schedule_init();
 
     // Job submission thread initialization
     srand(time(0));
@@ -35,8 +35,6 @@ int main(int argc, char *argv[])
     double percent = (double)job_counter / (counter - 1) * 100.0;
     printf("Percentage Completed %f%%\n", percent);
     printf("DONE!!!!!!!\n");
-
-    schedule_destroy();
 
     if (close_console)
     {

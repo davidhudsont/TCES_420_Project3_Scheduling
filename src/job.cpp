@@ -14,24 +14,21 @@ JOB::JOB(int id)
       task_counter(0),
       job_id(id)
 {
-    this->tasks = TASK_AMT();
-    this->task_type = (TASK_TYPE)TASK_GEN();
-    if (this->task_type == IO)
-        this->current_task = IO_TASK();
-    else if (this->task_type == CPU)
-        this->current_task = CPU_TASK();
+    tasks = TASK_AMT();
+    task_type = (TASK_TYPE)TASK_GEN();
+    if (task_type == IO)
+        current_task = IO_TASK();
+    else if (task_type == CPU)
+        current_task = CPU_TASK();
 }
 
-/**
- * Queue up the next task within JOB struct
- * 
- * parameter[in] = 
- */
 void JOB::next_task()
 {
     task_counter++;
     if (task_counter == tasks)
+    {
         is_completed = 1;
+    }
     else
     {
         task_type = (TASK_TYPE)TASK_GEN();
@@ -42,13 +39,6 @@ void JOB::next_task()
     }
 }
 
-/**
- * Completes the current task and 
- * queues up the next task.
- * 
- * parameters[in] = JOB *j
- * 
- */
 void JOB::complete_task()
 {
     if (task_counter < tasks)

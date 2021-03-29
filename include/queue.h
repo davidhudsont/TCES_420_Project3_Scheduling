@@ -1,16 +1,15 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "job.h"
 #include "node.h"
 
-struct QUEUE
+class QUEUE
 {
+private:
     int qsize;  //Current Size of the queue
     NODE *head; //Head of the queue
     NODE *tail; //Tail of the queue
-
+public:
     QUEUE();
     ~QUEUE();
 
