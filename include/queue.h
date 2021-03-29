@@ -1,28 +1,25 @@
+#pragma once
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "job.h"
 #include "node.h"
 
-#ifndef __QUEUE__H__   /* Include guard */
-#define __QUEUE__H__
+struct QUEUE
+{
+    int qsize;  //Current Size of the queue
+    NODE *head; //Head of the queue
+    NODE *tail; //Tail of the queue
 
-typedef struct queue {
- 	int qsize;		//Current Size of the queue
- 	NODE* head; 	//Head of the queue
-	NODE* tail;		//Tail of the queue
+    QUEUE();
+    ~QUEUE();
 
- } QUEUE;
- 
-int isEmpty(QUEUE* q);
+    int isEmpty();
 
-void enqueue_job(QUEUE* q, JOB* j);
- 
-JOB *dequeue_job(QUEUE* q);
+    void enqueue_job(int id);
+    void requeue_job(JOB *job);
 
-QUEUE* queue_init();
+    JOB *dequeue_job();
 
-void queue_delete(QUEUE* q);
-
-void print_queue(QUEUE* q);
-
-#endif 
+    void print_queue();
+};

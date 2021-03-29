@@ -1,10 +1,8 @@
 IDIR = ../include
-CC=gcc
+CC=g++
 CFLAGS=-I$(IDIR)
 
 ODIR = obj
-
-LIBS = -lpthread
 
 _DEPS = threads.h queue.h node.h job.h
 DEPS = $(patsubst %, $(ODIR)/%, $(_OBJ))
@@ -13,11 +11,11 @@ _OBJ = scheduler.o scheduler_threads.o queue.o node.o job.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: %.c $(DEPS)
+$(ODIR)/%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 main: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+	$(CC) -o $@ $^ $(CFLAGS)
 
 
 .PHONY: clean
