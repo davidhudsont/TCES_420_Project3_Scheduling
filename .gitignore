@@ -34,3 +34,5 @@
 # VsCode files
 *.vscode
 
+# Cmake build files
+build/
